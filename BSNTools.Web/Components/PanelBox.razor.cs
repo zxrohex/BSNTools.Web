@@ -18,7 +18,7 @@ namespace BSNTools.Web.Components
         public RenderFragment ChildContent { get; set; }
 
         [Parameter]
-        public Styling Attributes { get; set; } = new Styling();
+        public Styling Attributes { get; set; }
 
         public PanelBox()
         {

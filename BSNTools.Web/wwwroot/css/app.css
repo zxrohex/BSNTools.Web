@@ -236,9 +236,7 @@ div.combobox-input-wrapper button:active {
 }
 
 div.number-input-wrapper {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: 100%;
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
@@ -255,6 +253,9 @@ div.number-input-wrapper {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+}
+div.number-input-wrapper input {
+  width: 100%;
 }
 div.number-input-wrapper div.number-input-buttons {
   display: -webkit-box;
@@ -716,8 +717,16 @@ div.taskbar div.taskbar-tray div.taskbar-clock {
 }
 div.window {
   position: relative;
-  width: 100%;
-  height: calc(100% - 24px);
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+  min-height: -webkit-max-content;
+  min-height: -moz-max-content;
+  min-height: max-content;
+  max-width: -webkit-max-content;
+  max-width: -moz-max-content;
+  max-width: max-content;
+  max-height: calc(100% - 24px);
   padding: 1px;
   background-color: rgb(192, 192, 192);
   border-top: 2px groove rgb(255, 255, 255);
@@ -727,6 +736,7 @@ div.window {
 }
 div.window div.window-titlebar {
   position: relative;
+  min-width: 190px;
   width: 100%;
   height: 19px;
   padding: 2px;
@@ -765,6 +775,9 @@ div.window div.window-titlebar div.window-titlebar-content:first-of-type {
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
+}
+div.window div.window-titlebar div.window-titlebar-content:first-of-type h6 {
+  width: 100%;
 }
 div.window div.window-titlebar div.window-titlebar-content:last-of-type {
   -webkit-box-pack: end;
@@ -894,21 +907,19 @@ div.window div.window-menubar + div.window-content {
 }
 div.window div.window-content {
   position: relative;
-  min-width: -webkit-max-content;
-  min-width: -moz-max-content;
-  min-width: max-content;
-  min-height: -webkit-max-content;
-  min-height: -moz-max-content;
-  min-height: max-content;
-  width: 100%;
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+  min-height: calc(100% + 61px);
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
   height: calc(100% - 21px);
   padding: 5px;
   background-color: rgb(192, 192, 192);
 }
 div.window div.window-content div.action-buttons {
-  position: absolute;
-  bottom: 5px;
-  right: 5px;
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -922,9 +933,13 @@ div.window div.window-content div.action-buttons {
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
+  margin-top: 5px;
 }
 div.window div.window-content div.action-buttons button {
   margin-left: 10px;
+}
+div.window div.window-content div.action-buttons button:first-of-type {
+  margin-left: 0px;
 }
 
 div.panel-group-box {
