@@ -125,6 +125,27 @@ input[type=checkbox]:checked::before {
   content: "✓";
 }
 
+code {
+  display: inline-block;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 7px;
+  border-top: 2px ridge rgb(128, 128, 128);
+  border-left: 2px ridge rgb(128, 128, 128);
+  border-bottom: 2px groove rgb(255, 255, 255);
+  border-right: 2px groove rgb(255, 255, 255);
+  font-family: "Consolas", monospace;
+  font-size: 11px;
+  color: black;
+}
+code div {
+  color: black;
+}
+
 div.checkbox-input-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -803,6 +824,8 @@ div.window div.window-menubar + div.window-content {
 }
 div.window div.window-content {
   position: relative;
+  min-width: 400px;
+  min-height: 350px;
   width: 100%;
   height: calc(100% - 21px);
   padding: 5px;

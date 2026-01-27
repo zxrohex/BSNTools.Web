@@ -1,4 +1,4 @@
 ﻿<div class="checkbox-input-wrapper">
-    <input type="checkbox" value="@IsChecked" @onchange="OnInputChange" disabled="@IsDisabled" />
-    <span>@Text</span>
+    <input type="checkbox" value="@IsChecked" checked="@IsChecked" @onchange="OnInputChange" disabled="@IsDisabled" />
+    <span @onclick="OnClick">@Text</span>
 </div>

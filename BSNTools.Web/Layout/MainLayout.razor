@@ -17,6 +17,10 @@
 						Konversion
 					</NavLink>
 
+					<NavLink ActiveClass="active" href="/ip">
+						IP-Tools
+					</NavLink>
+
 					<NavLink ActiveClass="active" href="/settings">
 						Einstellungen
 					</NavLink>
@@ -29,7 +33,7 @@
 
 				<div class="taskbar-tray">
 					<div class="taskbar-clock">
-						<span id="tray-clock">12:00</span>
+						<span id="tray-clock">@currentTime</span>
 					</div>
 				</div>
 			</div>
@@ -38,8 +42,27 @@
 </div>
 
 @code {
-	void a()
+	System.Timers.Timer timer = new System.Timers.Timer(1000);
+
+    string currentTime = DateTime.Now.ToString("HH:mm");
+
+	protected override Task OnInitializedAsync()
+	{
+		timer.Elapsed += async (sender, e) =>
+		{
+			await InvokeAsync(() =>
+			{
+				currentTime = DateTime.Now.ToString("HH:mm");
+			});
+        };
+
+		timer.Start();
+
+		return base.OnInitializedAsync();
+    }
+
+	protected override async Task OnParametersSetAsync()
 	{
 		
-	}
+    }
 }

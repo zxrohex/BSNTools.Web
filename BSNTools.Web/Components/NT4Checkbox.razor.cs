@@ -28,6 +28,15 @@ namespace BSNTools.Web.Components
 
         }
 
+        private async Task OnClick()
+        {
+            IsChecked = !IsChecked;
+
+            await IsCheckedChanged.InvokeAsync(IsChecked);
+        }
+
+
+
         private async Task OnInputChange(ChangeEventArgs e)
         {
             IsChecked = (bool)e.Value;

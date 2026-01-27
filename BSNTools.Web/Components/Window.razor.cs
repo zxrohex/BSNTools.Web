@@ -15,6 +15,15 @@ namespace BSNTools.Web.Components
         public string Title { get; set; }
 
         [Parameter]
+        public bool FullScreen { get; set; } = false;
+
+        [Parameter]
+        public int Width { get; set; } = 400;
+
+        [Parameter] 
+        public int Height { get; set; } = 300;
+
+        [Parameter]
         public RenderFragment ChildContent { get; set; }
 
         [Parameter]
