@@ -9,9 +9,9 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace BSNTools.Web.Pages
 {
-    public partial class NumericSystemConverters
+    public partial class Conversion
     {
-        public NumericSystemConverters()
+        public Conversion()
         {
 
         }

@@ -1,0 +1,12 @@
+﻿<div class="panel-group-box" style="@(!string.IsNullOrEmpty(Title) ? "min-width: " + Title.Length * 10 + "px;": "")">
+    @if (!string.IsNullOrEmpty(Title))
+    {
+        <span class="panel-group-box-title">
+            @Title
+        </span>
+    }
+
+    <div class="panel-group-box-content">
+        @ChildContent
+     </div>
+</div>

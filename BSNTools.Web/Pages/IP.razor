@@ -1,0 +1,82 @@
+﻿@page "/ip"
+
+<PageTitle>IP-Tools</PageTitle>
+
+<Window Title="IP-Tools">
+    <MenuBar>
+        <WindowMenuBar>
+
+            <MenuBarItem Title="Einstellungen">
+                <DropdownItem>
+                    <span>Test</span>
+                </DropdownItem>
+
+                <DropdownItem>
+                    <span>Test AAAAAAAAAAAA</span>
+                </DropdownItem>
+            </MenuBarItem>
+
+            <MenuBarItem Title="Tools">
+                <DropdownItem>
+                    <span>d</span>
+                </DropdownItem>
+
+                <DropdownItem>
+                    <span>akdsmii</span>
+                </DropdownItem>
+            </MenuBarItem>
+
+        </WindowMenuBar>
+    </MenuBar>
+
+    <Content>
+        <p>
+            <strong>IP-Tools</strong>
+        </p>
+
+
+        <PanelBox Title="Binär">
+            <NT4InputNumber @bind-Value="myCount" Min="0" Max="99999999" Format="NT4InputNumberFormat.Binary" />
+
+            <p>Current count: @myCount</p>
+        </PanelBox>
+
+
+        <PanelBox Title="Dezimal">
+            <NT4InputNumber @bind-Value="myCount" Min="0" Max="9999999" Format="NT4InputNumberFormat.Decimal" />
+
+            <p>Current count: @myCount</p>
+        </PanelBox>
+
+        <PanelBox Title="Hex">
+            <NT4InputNumber @bind-Value="myCount" Min="0" Max="9999999" Format="NT4InputNumberFormat.Hexadecimal" />
+
+            <p>Current count: @myCount</p>
+        </PanelBox>
+
+        <PanelBox Title="Oktett">
+            <NT4InputNumber @bind-Value="myCount" Min="0" Max="9999999" Format="NT4InputNumberFormat.Octal" />
+
+            <p>Current count: @myCount</p>
+        </PanelBox>
+
+        <div class="action-buttons">
+            <button>
+                OK
+            </button>
+
+            <button>
+                Test
+            </button>
+        </div>
+
+
+    </Content>
+</Window>
+
+@code {
+    private int myCount = 10;
+    private int myCount2 = 10;
+    private int myCount3 = 10;
+    private int myCount4 = 10;
+}

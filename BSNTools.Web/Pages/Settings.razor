@@ -9,7 +9,11 @@
             <strong>Einstellungen</strong>
         </p>
 
-        <p>Test</p>
+        <PanelBox Title="Design">
+            <NT4Checkbox @bind-IsChecked="isChecked" Text="Test" />
+
+            <p>@isChecked</p>
+        </PanelBox>
 
 
         <div class="action-buttons">
@@ -25,4 +29,8 @@
 
     </Content>
 </Window>
+
+@code {
+    bool isChecked = false;
+}
 

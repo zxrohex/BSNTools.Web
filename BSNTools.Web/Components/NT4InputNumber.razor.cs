@@ -55,21 +55,34 @@ namespace BSNTools.Web.Components
             switch (Format)
             {
                 case NT4InputNumberFormat.Binary:
-                    if (int.TryParse(e.Value?.ToString() ?? "0", System.Globalization.NumberStyles.AllowLeadingWhite | System.Globalization.NumberStyles.AllowTrailingWhite, null, out int binaryValue))
+                    try
                     {
                         await UpdateValue(Convert.ToInt32(e.Value?.ToString() ?? "0", 2));
                     }
+                    catch
+                    {
+                        // Ignore invalid input
+                    }
+
                     break;
                 case NT4InputNumberFormat.Hexadecimal:
-                    if (int.TryParse(e.Value?.ToString() ?? "0", System.Globalization.NumberStyles.AllowLeadingWhite | System.Globalization.NumberStyles.AllowTrailingWhite, null, out int hexValue))
+                    try 
                     {
                         await UpdateValue(Convert.ToInt32(e.Value?.ToString() ?? "0", 16));
                     }
+                    catch
+                    {
+                        // Ignore invalid input
+                    }
                     break;
                 case NT4InputNumberFormat.Octal:
-                    if (int.TryParse(e.Value?.ToString() ?? "0", System.Globalization.NumberStyles.AllowLeadingWhite | System.Globalization.NumberStyles.AllowTrailingWhite, null, out int octalValue))
+                    try 
                     {
                         await UpdateValue(Convert.ToInt32(e.Value?.ToString() ?? "0", 8));
+                    }
+                    catch
+                    {
+                        // Ignore invalid input
                     }
                     break;
                 default:

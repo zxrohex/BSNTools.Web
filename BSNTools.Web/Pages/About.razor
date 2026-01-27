@@ -2,27 +2,18 @@
 
 <PageTitle>Über BSN-Tools</PageTitle>
 
-<Window Title="Einstellungen">
+<Window Title="Über BSN-Tools">
 
     <Content>
         <p>
-            <strong>Einstellungen</strong>
+            <strong>Über BSN-Tools</strong>
         </p>
 
-        <p>Test</p>
-
-
-        <div class="action-buttons">
-            <button>
-                OK
-            </button>
-
-            <button>
-                Test
-            </button>
-        </div>
-
+        <p>Version @version.Major.@version.Minor.@version.Build Build @version.Revision</p>
 
     </Content>
 </Window>
 
+@code {
+    Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version!;
+}
