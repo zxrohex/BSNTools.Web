@@ -1,0 +1,37 @@
+﻿@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+
+<div class="app-container">
+    <div class="app-main">
+
+		<div class="desktop">
+			@Body
+
+			<div class="taskbar">
+				<div class="taskbar-items">
+					<NavLink ActiveClass="active" Match="NavLinkMatch.All" href="/">
+						Home
+					</NavLink>
+
+					<NavLink ActiveClass="active" href="/conversion/numeric-systems">
+						Zahlensystem-Konverter
+					</NavLink>
+					
+				</div>
+
+				<div class="taskbar-tray">
+					<div class="taskbar-clock">
+						<span id="tray-clock">12:00</span>
+					</div>
+				</div>
+			</div>
+		</div>      
+    </div>
+</div>
+
+@code {
+	void a()
+	{
+		
+	}
+}

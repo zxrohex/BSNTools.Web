@@ -1,0 +1,80 @@
+﻿@page "/conversion/numeric-systems"
+
+<PageTitle>Nummernsystem-Konverter</PageTitle>
+
+<Window Title="Nummernsystem-Konverter">
+    <MenuBar>
+        <WindowMenuBar>
+
+            <MenuBarItem Title="Einstellungen">
+                <DropdownItem>
+                    <span>Test</span>
+                </DropdownItem>
+
+                <DropdownItem>
+                    <span>Test AAAAAAAAAAAA</span>
+                </DropdownItem>
+            </MenuBarItem>
+
+            <MenuBarItem Title="Tools">
+                <DropdownItem>
+                    <span>d</span>
+                </DropdownItem>
+
+                <DropdownItem>
+                    <span>akdsmii</span>
+                </DropdownItem>
+            </MenuBarItem>
+
+        </WindowMenuBar>
+    </MenuBar>
+
+    <Content>
+        <p>
+            <strong>Nummernsystem-Konverter</strong>
+        </p>
+
+        <p>Binär</p>
+
+        <NT4InputNumber @bind-Value="myCount" Min="0" Max="99999999" Format="NT4InputNumberFormat.Binary" />
+        
+        <p>Current count: @myCount</p>
+
+        <p>Dezimal</p>
+
+        <NT4InputNumber @bind-Value="myCount" Min="0" Max="9999999" Format="NT4InputNumberFormat.Decimal" />
+
+        <p>Current count: @myCount</p>
+
+        <p>Hexadezimal</p>
+
+        <NT4InputNumber @bind-Value="myCount" Min="0" Max="9999999" Format="NT4InputNumberFormat.Hexadecimal" />
+
+        <p>Current count: @myCount</p>
+
+        <p>Oktett</p>
+
+        <NT4InputNumber @bind-Value="myCount" Min="0" Max="9999999" Format="NT4InputNumberFormat.Octal" />
+
+        <p>Current count: @myCount</p>
+
+        <div class="action-buttons">
+            <button>
+                OK
+            </button>
+
+            <button>
+                Test
+            </button>
+        </div>
+
+
+    </Content>
+</Window>
+
+@code {
+    private int myCount = 10;
+    private int myCount2 = 10;
+    private int myCount3 = 10;
+    private int myCount4 = 10;
+}

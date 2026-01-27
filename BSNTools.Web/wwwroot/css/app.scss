@@ -1,0 +1,716 @@
+@font-face {
+    font-family: "Win98 MS Sans Serif";
+    src: url("./fonts/MS Sans Serif.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Win98 MS Sans Serif";
+    src: url("./fonts/MS Sans Serif Bold.ttf") format("truetype");
+    font-weight: bold;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: "Win98 MS Sans Serif";
+    -webkit-font-smoothing: none;
+}
+
+:root {
+    --mouse-x: 0px;
+    --mouse-y: 0px;
+ 
+}
+
+html, body, #app {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    margin: 0px;
+}
+
+div.app-container, div.app-main {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+div.app-container {
+    zoom: 1;
+}
+
+h1, h2, h3, h4, h5, h6, p, span, a {
+    margin: 0px;
+    user-select: none;
+}
+
+p, span, button, a {
+    font-size: 11px;
+}
+
+button, a {
+    min-width: 75px;
+    padding: 4px 0px;
+    background-color: rgb(192, 192, 192);
+    border-top: 1px groove rgb(255, 255, 255);
+    border-left: 1px groove rgb(255, 255, 255);
+    border-bottom: 2px ridge rgb(128, 128, 128);
+    border-right: 2px ridge rgb(128, 128, 128);
+    outline: none;
+
+    &:active {
+        border: 1px solid rgb(140, 140, 140);
+        outline: 1px solid black;
+    }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+input, select, textarea {
+    font-family: "Win98 MS Sans Serif";
+    font-size: 11px;
+}
+
+    input[type="text"], input[type="number"], select, textarea {
+        border-top: 2px ridge rgb(128, 128, 128);
+        border-left: 2px ridge rgb(128, 128, 128);
+        border-bottom: 2px groove rgb(255, 255, 255);
+        border-right: 2px groove rgb(255, 255, 255);
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+div.number-input-wrapper {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    div.number-input-buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        button {
+            min-width: 0px;
+            width: 16px;
+            height: 8px;
+            padding: 0px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            font-size: 5px;
+            border-top: 1px groove rgb(255, 255, 255);
+            border-left: 1px groove rgb(255, 255, 255);
+            border-bottom: 2px ridge rgb(128, 128, 128);
+            border-right: 2px ridge rgb(128, 128, 128);
+
+            &:active {
+                border-top: 2px ridge rgb(128, 128, 128);
+                border-left: 2px ridge rgb(128, 128, 128);
+                border-bottom: 1px groove rgb(255, 255, 255);
+                border-right: 1px groove rgb(255, 255, 255);
+                outline: none;
+            }
+        }
+    }
+}
+
+div.desktop {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 128, 128);
+    overflow: hidden;
+}
+
+.draggable {
+}
+
+div.taskbar {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 26px;
+    padding: 2px 4px;
+    background-color: rgb(192, 192, 192);
+    border-top: 2px groove rgb(255, 255, 255);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    div.taskbar-start {
+        position: relative;
+        height: 100%;
+
+        button {
+            min-width: 0px;
+            width: 55px;
+            height: 100%;
+            padding-top: 5px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+
+            &:active, &.open {
+                outline: none;
+                border-top: 2px ridge rgb(128, 128, 128);
+                border-left: 2px ridge rgb(128, 128, 128);
+                border-bottom: 2px groove rgb(255, 255, 255);
+                border-right: 2px groove rgb(255, 255, 255);
+            }
+
+            img {
+                width: 16px;
+                height: 16px;
+                image-rendering: pixelated;
+                margin-right: 2px;
+            }
+
+            span {
+                font-weight: bold;
+            }
+        }
+
+        div.start-menu {
+            position: absolute;
+            bottom: 100%;
+            left: 0px;
+            min-width: 160px;
+            min-height: 235px;
+            height: 235px;
+            background-color: rgb(192, 192, 192);
+            border: 2px ridge rgb(255, 255, 255);
+            border-bottom: 2px ridge rgb(128, 128, 128);
+            border-right: 2px ridge rgb(128, 128, 128);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+
+            div.start-menu-banner {
+                position: relative;
+                width: 28px;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-end;
+
+                h4 {
+                    margin-bottom: 10px;
+                    font-size: 13px;
+                    font-weight: bold;
+                    color: white;
+                    z-index: 10;
+                }
+
+
+                div.start-menu-banner-image {
+                    position: absolute;
+                    top: 0px;
+                    left: 0px;
+                    overflow: hidden;
+                    width: 100%;
+                    height: 100%;
+                    background-color: blue;
+
+                    img {
+                        position: relative;
+                        width: 300px;
+                        height: 300px;
+                        filter: contrast(170%) brightness(1000%) saturate(0%);
+                        mix-blend-mode: multiply;
+                        background: linear-gradient(180deg, rgba(0,0,0,1) -25%, rgba(0,0,0,0)), url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2' numOctaves='8' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+                    }
+                }
+
+
+
+                h4 {
+                    writing-mode: sideways-lr;
+                    text-orientation: sideways;
+                }
+            }
+
+            div.start-menu-items {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-end;
+
+
+                div.start-menu-item {
+                    position: relative;
+                    width: 100%;
+                    height: 32px;
+                    padding: 0px 10px;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: flex-start;
+
+                    div.submenu-arrow {
+                        margin-left: auto;
+                        width: 0;
+                        height: 0;
+                        border-top: 4px solid transparent;
+                        border-bottom: 4px solid transparent;
+                        border-left: 4px solid black;
+                    }
+
+                    &:hover {
+                        & > div.start-menu-submenu {
+                            display: flex;
+                        }
+
+                        & > div.start-menu-item {
+                            background-color: rgb(0, 0, 128);
+                            color: white;
+                            cursor: default;
+                        }
+
+                        & > div.submenu-arrow {
+                            border-left: 4px solid white;
+                        }
+                    }
+
+                    div.start-menu-submenu {
+                        position: absolute;
+                        top: 0%;
+                        left: 100%;
+                        min-width: max-content;
+                        background-color: rgb(192, 192, 192);
+                        color: black;
+                        border: 2px groove rgb(255, 255, 255);
+                        border-bottom: 2px ridge rgb(128, 128, 128);
+                        border-right: 2px ridge rgb(128, 128, 128);
+                        display: none;
+                        flex-direction: column;
+                        z-index: 100;
+
+                        div.start-menu-submenu-item {
+                            width: 100%;
+                            height: 20px;
+                            display: flex;
+                            flex-direction: row;
+                            align-items: center;
+                            justify-content: flex-start;
+                            padding: 0px 10px;
+
+                            img {
+                                width: 16px;
+                                height: 16px;
+                                image-rendering: pixelated;
+                                margin-right: 5px;
+                            }
+
+
+                            span {
+                                margin: 0px;
+                            }
+
+                            &:hover {
+                                background-color: rgb(0, 0, 128);
+                                color: white;
+                                cursor: default;
+                            }
+                        }
+                    }
+
+                    &.shutdown {
+                        margin-top: auto;
+                        height: 38px;
+                        border-top: 2px groove rgb(230, 230, 230);
+                    }
+
+                    &:hover {
+                        background-color: rgb(0, 0, 128);
+                        color: white;
+                        cursor: default;
+                    }
+
+                    img {
+                        width: 24px;
+                        height: 24px;
+                        image-rendering: pixelated;
+                        margin-right: 5px;
+                    }
+                }
+            }
+        }
+    }
+
+    div.taskbar-items {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+
+        a {
+            min-width: 0px;
+            width: 150px;
+            height: 100%;
+            padding-top: 5px;
+            padding-left: 4px;
+            padding-right: 5px;
+            margin-right: 2px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+
+            text-decoration: none;
+
+            color: black;
+
+
+            &.active, &:active {
+                background: repeating-conic-gradient(#ccc 0% 25%, rgb(246, 246, 246) 0% 50%) 50% / 2px 2px;
+                border-top: 2px ridge rgb(128, 128, 128);
+                border-left: 2px ridge rgb(128, 128, 128);
+                border-bottom: 2px groove rgb(255, 255, 255);
+                border-right: 2px groove rgb(255, 255, 255);
+            }
+
+            background: none;
+            background-color: rgb(192, 192, 192);
+            border-top: 1px groove rgb(255, 255, 255);
+            border-left: 1px groove rgb(255, 255, 255);
+            border-bottom: 2px ridge rgb(128, 128, 128);
+            border-right: 2px ridge rgb(128, 128, 128);
+        }
+
+        button.taskbar-item {
+            min-width: 0px;
+            width: 150px;
+            height: 100%;
+            padding-top: 5px;
+            padding-left: 4px;
+            padding-right: 5px;
+            margin-right: 2px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+
+
+            &.active, &::deep.active {
+                background: repeating-conic-gradient(#ccc 0% 25%, rgb(246, 246, 246) 0% 50%) 50% / 2px 2px;
+                border-top: 2px ridge rgb(128, 128, 128);
+                border-left: 2px ridge rgb(128, 128, 128);
+                border-bottom: 2px groove rgb(255, 255, 255);
+                border-right: 2px groove rgb(255, 255, 255);
+            }
+
+            background: none;
+            background-color: rgb(192, 192, 192);
+            border-top: 1px groove rgb(255, 255, 255);
+            border-left: 1px groove rgb(255, 255, 255);
+            border-bottom: 2px ridge rgb(128, 128, 128);
+            border-right: 2px ridge rgb(128, 128, 128);
+
+
+            img {
+                margin-right: 5px;
+            }
+        }
+    }
+
+    div.taskbar-tray {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        height: 100%;
+        padding: 0px 0px;
+        border-top: 2px ridge rgb(128, 128, 128);
+        border-left: 2px ridge rgb(128, 128, 128);
+        border-bottom: 2px groove rgb(255, 255, 255);
+        border-right: 2px groove rgb(255, 255, 255);
+
+
+        div.taskbar-clock {
+            min-width: 0px;
+            width: 43px;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+
+            span {
+            }
+        }
+    }
+}
+
+div.window {
+    position: relative;
+    width: 100%;
+    height: calc(100% - 24px);
+    padding: 1px;
+    background-color: rgb(192, 192, 192);
+    border-top: 2px groove rgb(255, 255, 255);
+    border-left: 2px groove rgb(255, 255, 255);
+    border-bottom: 2px ridge rgb(128, 128, 128);
+    border-right: 2px ridge rgb(128, 128, 128);
+
+
+    div.window-titlebar {
+        position: relative;
+        width: 100%;
+        height: 19px;
+        padding: 2px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        background-color: rgb(0, 0, 128);
+        color: white;
+
+        div.window-titlebar-content {
+            position: relative;
+            width: 50%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            &:first-of-type {
+                justify-content: flex-start;
+            }
+
+            &:last-of-type {
+                justify-content: flex-end;
+
+                button.titlebar-control {
+                    min-width: 0px;
+                    width: 17px;
+                    height: 15px;
+                    padding: 0px;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: center;
+
+                    h6 {
+                        font-size: 10px;
+                        margin-top: 1px;
+                        margin-left: 1px;
+                    }
+                }
+            }
+        }
+    }
+
+    div.window-menubar {
+        position: relative;
+        width: 100%;
+        height: 20px;
+        padding: 1px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        background-color: rgb(192, 192, 192);
+        border-bottom: 2px groove rgb(230, 230, 230);
+
+        div.menubar-item {
+            position: relative;
+            width: auto;
+            height: 100%;
+
+            &:hover {
+                & > div.menubar-dropdown {
+                    display: flex;
+                }
+
+                & > div.menubar-item-button {
+                    background-color: rgb(0, 0, 128);
+                    color: white;
+                    cursor: default;
+                }
+            }
+
+            div.menubar-item-button {
+                height: 100%;
+                padding: 2px 6px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+            }
+
+            div.menubar-dropdown {
+                position: absolute;
+                top: 100%;
+                left: 0px;
+                min-width: max-content;
+                background-color: rgb(192, 192, 192);
+                border: 2px groove rgb(255, 255, 255);
+                border-bottom: 2px ridge rgb(128, 128, 128);
+                border-right: 2px ridge rgb(128, 128, 128);
+                display: none;
+                flex-direction: column;
+                z-index: 100;
+
+                div.dropdown-item {
+                    width: 100%;
+                    height: 20px;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: flex-start;
+                    padding: 0px 10px;
+
+                    span {
+                        margin: 0px;
+                    }
+
+                    &:hover {
+                        background-color: rgb(0, 0, 128);
+                        color: white;
+                        cursor: default;
+                    }
+                }
+            }
+        }
+    }
+
+        div.window-menubar + div.window-content {
+            height: calc(100% - 41px);
+        }
+
+    div.window-content {
+        position: relative;
+        width: 100%;
+        height: calc(100% - 21px);
+        padding: 5px;
+        background-color: rgb(192, 192, 192);
+
+        div.action-buttons {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-end;
+
+            button {
+                margin-left: 10px;
+            }
+        }
+    }
+}
+
+.valid.modified:not([type=checkbox]) {
+    outline: 1px solid #26b050;
+}
+
+.invalid {
+    outline: 1px solid red;
+}
+
+.validation-message {
+    color: red;
+}
+
+#blazor-error-ui {
+    color-scheme: light only;
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
+
+.blazor-error-boundary {
+    background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNDkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIG92ZXJmbG93PSJoaWRkZW4iPjxkZWZzPjxjbGlwUGF0aCBpZD0iY2xpcDAiPjxyZWN0IHg9IjIzNSIgeT0iNTEiIHdpZHRoPSI1NiIgaGVpZ2h0PSI0OSIvPjwvY2xpcFBhdGg+PC9kZWZzPjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMCkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMzUgLTUxKSI+PHBhdGggZD0iTTI2My41MDYgNTFDMjY0LjcxNyA1MSAyNjUuODEzIDUxLjQ4MzcgMjY2LjYwNiA1Mi4yNjU4TDI2Ny4wNTIgNTIuNzk4NyAyNjcuNTM5IDUzLjYyODMgMjkwLjE4NSA5Mi4xODMxIDI5MC41NDUgOTIuNzk1IDI5MC42NTYgOTIuOTk2QzI5MC44NzcgOTMuNTEzIDI5MSA5NC4wODE1IDI5MSA5NC42NzgyIDI5MSA5Ny4wNjUxIDI4OS4wMzggOTkgMjg2LjYxNyA5OUwyNDAuMzgzIDk5QzIzNy45NjMgOTkgMjM2IDk3LjA2NTEgMjM2IDk0LjY3ODIgMjM2IDk0LjM3OTkgMjM2LjAzMSA5NC4wODg2IDIzNi4wODkgOTMuODA3MkwyMzYuMzM4IDkzLjAxNjIgMjM2Ljg1OCA5Mi4xMzE0IDI1OS40NzMgNTMuNjI5NCAyNTkuOTYxIDUyLjc5ODUgMjYwLjQwNyA1Mi4yNjU4QzI2MS4yIDUxLjQ4MzcgMjYyLjI5NiA1MSAyNjMuNTA2IDUxWk0yNjMuNTg2IDY2LjAxODNDMjYwLjczNyA2Ni4wMTgzIDI1OS4zMTMgNjcuMTI0NSAyNTkuMzEzIDY5LjMzNyAyNTkuMzEzIDY5LjYxMDIgMjU5LjMzMiA2OS44NjA4IDI1OS4zNzEgNzAuMDg4N0wyNjEuNzk1IDg0LjAxNjEgMjY1LjM4IDg0LjAxNjEgMjY3LjgyMSA2OS43NDc1QzI2Ny44NiA2OS43MzA5IDI2Ny44NzkgNjkuNTg3NyAyNjcuODc5IDY5LjMxNzkgMjY3Ljg3OSA2Ny4xMTgyIDI2Ni40NDggNjYuMDE4MyAyNjMuNTg2IDY2LjAxODNaTTI2My41NzYgODYuMDU0N0MyNjEuMDQ5IDg2LjA1NDcgMjU5Ljc4NiA4Ny4zMDA1IDI1OS43ODYgODkuNzkyMSAyNTkuNzg2IDkyLjI4MzcgMjYxLjA0OSA5My41Mjk1IDI2My41NzYgOTMuNTI5NSAyNjYuMTE2IDkzLjUyOTUgMjY3LjM4NyA5Mi4yODM3IDI2Ny4zODcgODkuNzkyMSAyNjcuMzg3IDg3LjMwMDUgMjY2LjExNiA4Ni4wNTQ3IDI2My41NzYgODYuMDU0N1oiIGZpbGw9IiNGRkU1MDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIvPjwvZz48L3N2Zz4=) no-repeat 1rem/1.8rem, #b32121;
+    padding: 1rem 1rem 1rem 3.7rem;
+    color: white;
+}
+
+    .blazor-error-boundary::after {
+        content: "An error has occurred."
+    }
+
+.loading-progress {
+    position: absolute;
+    display: block;
+    width: 8rem;
+    height: 8rem;
+    inset: 20vh 0 auto 0;
+    margin: 0 auto 0 auto;
+}
+
+    .loading-progress circle {
+        fill: none;
+        stroke: #e0e0e0;
+        stroke-width: 0.6rem;
+        transform-origin: 50% 50%;
+        transform: rotate(-90deg);
+    }
+
+        .loading-progress circle:last-child {
+            stroke: #1b6ec2;
+            stroke-dasharray: calc(3.141 * var(--blazor-load-percentage, 0%) * 0.8), 500%;
+            transition: stroke-dasharray 0.05s ease-in-out;
+        }
+
+.loading-progress-text {
+    position: absolute;
+    text-align: center;
+    font-weight: bold;
+    inset: calc(20vh + 3.25rem) 0 auto 0.2rem;
+}
+
+    .loading-progress-text:after {
+        content: var(--blazor-load-percentage-text, "Loading");
+    }
+
+code {
+    color: #c02d76;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+    color: var(--bs-secondary-color);
+    text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+    text-align: start;
+}
