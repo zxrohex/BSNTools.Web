@@ -1,0 +1,15 @@
+﻿div.row-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    div {
+        width: 50%;
+        height: 100%;
+    }
+}
+
+.full-width {
+    width: 100%;
+}

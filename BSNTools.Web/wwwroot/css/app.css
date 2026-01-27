@@ -165,10 +165,80 @@ div.checkbox-input-wrapper span {
   margin-left: 5px;
 }
 
-div.number-input-wrapper {
+div.combobox-input-wrapper {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  border-top: 2px ridge rgb(128, 128, 128);
+  border-left: 2px ridge rgb(128, 128, 128);
+  border-bottom: 2px groove rgb(255, 255, 255);
+  border-right: 2px groove rgb(255, 255, 255);
+}
+div.combobox-input-wrapper select {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border: none;
+  outline: none;
+  padding: 2px 4px 2px 4px;
+}
+div.combobox-input-wrapper select:focus {
+  outline: none;
+}
+div.combobox-input-wrapper button {
+  min-width: 0px;
+  width: 100%;
+  height: 15px;
+  padding: 0px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-top: 1px groove rgb(255, 255, 255);
+  border-left: 1px groove rgb(255, 255, 255);
+  border-bottom: 2px ridge rgb(128, 128, 128);
+  border-right: 2px ridge rgb(128, 128, 128);
+}
+div.combobox-input-wrapper button span.combobox-caret {
+  font-size: 13px;
+}
+div.combobox-input-wrapper button:active {
+  border-top: 2px ridge rgb(128, 128, 128);
+  border-left: 2px ridge rgb(128, 128, 128);
+  border-bottom: 1px groove rgb(255, 255, 255);
+  border-right: 1px groove rgb(255, 255, 255);
+  outline: none;
+}
+
+div.number-input-wrapper {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
@@ -824,8 +894,12 @@ div.window div.window-menubar + div.window-content {
 }
 div.window div.window-content {
   position: relative;
-  min-width: 400px;
-  min-height: 350px;
+  min-width: -webkit-max-content;
+  min-width: -moz-max-content;
+  min-width: max-content;
+  min-height: -webkit-max-content;
+  min-height: -moz-max-content;
+  min-height: max-content;
   width: 100%;
   height: calc(100% - 21px);
   padding: 5px;

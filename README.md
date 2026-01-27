@@ -13,13 +13,13 @@ die Notwendigkeit von .NET (10) und wie es gebundled wird).
 - **Subnetting**: Ein Tool zur Planung und Berechnung von Subnetzen.
 
 ### Status
-Derzeit in aktiver und früher, experimentieller Entwicklung. Weitere Werkzeuge und Funktionen werden in zukünftigen Versionen hinzugefügt.
+Derzeit in aktiver und sehr früher, experimentieller Entwicklung. Weitere Werkzeuge und Funktionen werden in zukünftigen Versionen hinzugefügt.
 
 ### Installation
-Releases werden bald über GitHub-Releases verfügbar sein (ab Donnerstag).
+kommt bald
 
 ### Nutzung
-BSN Tools wird sofort ausführbar sein, da .NET 10 gebundled ist.
+kommt bald
 
 ### Wieso?
 Als Aushilfe für mich selber und meine Klasse, da es vorallem keine guten Tools zur IPv4-Netzwerkberechnung gibt.

@@ -2,7 +2,7 @@
 
 <PageTitle>Konversion</PageTitle>
 
-<Window Title="Konversion">
+<Window Title="Konversion" Width="500" Height="500">
     <MenuBar>
         <WindowMenuBar>
 
@@ -22,35 +22,58 @@
     </MenuBar>
 
     <Content>
-        <p>
-            <strong>Nummernsystem-Konverter</strong>
-        </p>
+       <div class="row-container">
+            <div>
+                <p>
+                    <strong>Nummernsystem-Konverter</strong>
+                </p>
 
-    
-        <PanelBox Title="Binär">
-            <NT4InputNumber @bind-Value="myCount" Min="0" Max="99999999" Format="NT4InputNumberFormat.Binary" />
+                <PanelBox Title="Binär" Attributes="panelStyling">
+                    <NT4InputNumber @bind-Value="myCount" Min="0" Max="99999999" Format="NT4InputNumberFormat.Binary" />
+                </PanelBox>
 
-            <p>Current count: @myCount</p>
-        </PanelBox>
-        
 
-        <PanelBox Title="Dezimal">
-            <NT4InputNumber @bind-Value="myCount" Min="0" Max="9999999" Format="NT4InputNumberFormat.Decimal" />
+                <PanelBox Title="Dezimal" Attributes="panelStyling">
+                    <NT4InputNumber @bind-Value="myCount" Min="0" Max="9999999" Format="NT4InputNumberFormat.Decimal" />
+                </PanelBox>
 
-            <p>Current count: @myCount</p>
-        </PanelBox>
+                <PanelBox Title="Hex" Attributes="panelStyling">
+                    <NT4InputNumber @bind-Value="myCount" Min="0" Max="9999999" Format="NT4InputNumberFormat.Hexadecimal" />
+                </PanelBox>
 
-        <PanelBox Title="Hex">
-            <NT4InputNumber @bind-Value="myCount" Min="0" Max="9999999" Format="NT4InputNumberFormat.Hexadecimal" />
+                <PanelBox Title="Oktett" Attributes="panelStyling">
+                    <NT4InputNumber @bind-Value="myCount" Min="0" Max="9999999" Format="NT4InputNumberFormat.Octal" />
+                </PanelBox>
+            </div>
 
-            <p>Current count: @myCount</p>
-        </PanelBox>
+            <div>
+                <p>
+                    <strong>Einheiten-Konverter</strong>
+                </p>
 
-        <PanelBox Title="Oktett">
-            <NT4InputNumber @bind-Value="myCount" Min="0" Max="9999999" Format="NT4InputNumberFormat.Octal" />
 
-            <p>Current count: @myCount</p>
-        </PanelBox>
+
+                <PanelBox Title="#1" Attributes="panelStyling">
+
+
+                    <NT4InputNumber @bind-Value="rawCount" Min="0" Max="9999999" Format="NT4InputNumberFormat.Decimal" />
+
+                    <NT4ComboBox TItem="InformationUnit" Items="units" @bind-SelectedItem="selectedUnit" />
+                </PanelBox>
+
+                <PanelBox Title="#2" Attributes="panelStyling">
+                    <NT4InputNumber @bind-Value="myCount2" Min="0" Max="9999999" Format="NT4InputNumberFormat.Decimal" />
+
+                    <NT4ComboBox TItem="InformationUnit" Items="units" @bind-SelectedItem="selectedUnit2" />
+                </PanelBox>
+
+
+
+                <p>@selectedUnit</p>
+            </div>
+       </div>
+
+
 
         <div class="action-buttons">
             <button>
@@ -67,8 +90,30 @@
 </Window>
 
 @code {
+    private Styling panelStyling = new Styling
+    {
+        Width = "50%",
+        Margin = "5;5;5;5;px",
+    };
+
     private int myCount = 10;
-    private int myCount2 = 10;
-    private int myCount3 = 10;
-    private int myCount4 = 10;
+    private int rawCount = 0;
+    private int myCount2
+    {
+        get
+        {
+            return (int)UnitsNet.Information.From(rawCount, selectedUnit).As(selectedUnit2);
+        }
+        set 
+        {
+            rawCount = (int)UnitsNet.Information.From(value, selectedUnit2).As(selectedUnit);
+        }
+    }
+
+     
+     
+    List<InformationUnit> units = Enum.GetValues<InformationUnit>().ToList();
+
+    InformationUnit selectedUnit = InformationUnit.Byte;
+    InformationUnit selectedUnit2 = InformationUnit.Bit;
 }
