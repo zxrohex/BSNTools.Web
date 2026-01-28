@@ -1,4 +1,8 @@
 ﻿@page "/ip"
+@inject MessageBoxService MessageBox
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+
 
 <PageTitle>IP-Tools</PageTitle>
 
@@ -45,6 +49,19 @@
                             <strong>@prop.Name:</strong> @prop.GetValue(ipNetwork)
                         </div>
                     }
+
+                    @if (subnets != null)
+                    {
+                        <div style="margin-top: 10px;">
+                            <strong>Subnetze:</strong>
+                            <ul>
+                                @foreach (var subnet in subnets)
+                                {
+                                    <li>@subnet.ToString()</li>
+                                }
+                            </ul>
+                        </div>
+                    }
                 </code>
             </PanelBox>
         }
@@ -55,7 +72,7 @@
                 Berechnen
             </button>
 
-            <button>
+            <button @onclick="OnSubnettingClick">
                 Subnetting
             </button>
         </div>
@@ -69,13 +86,39 @@
 
     IPNetwork2 ipNetwork;
 
-   
+    IPNetworkCollection subnets;
+
 
     private async Task OnCalculateClick()
     {
         await InvokeAsync(() =>
         {
-            ipNetwork = IPNetwork2.Parse(ipAddress);
+            NavigationManager.NavigateTo(NavigationManager.GetUriWithQueryParameters(new Dictionary<string, object?>
+            {
+                ["ip"] = ipAddress
+            }));
+
+
         });
+    }
+
+    private async Task OnSubnettingClick()
+    {
+        string cidr = await JSRuntime.InvokeAsync<string>("prompt", "Geben Sie die CIDR ein:");
+
+        if (!string.IsNullOrEmpty(cidr))
+        {
+            await InvokeAsync(() =>
+            {
+                NavigationManager.NavigateTo(NavigationManager.GetUriWithQueryParameters(new Dictionary<string, object?>
+                {
+                    ["ip"] = ipAddress,
+                    ["cidr"] = cidr
+                }));
+            });
+        }
+
+        // Der Code "wartet" hier, bis der Nutzer geklickt hat
+  
     }
 }

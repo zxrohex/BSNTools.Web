@@ -1,15 +1,21 @@
 ﻿@page "/"
-
+@inject MessageBoxService MessageBox
 <PageTitle>Home</PageTitle>
 
 <Window Title="BSN-Tools">
 
     <Content>
-        <p>
-            <strong>Willkommen</strong>
-        </p>
+        <div class="layout">
+            <img class="banner" src="img/banner.png" />
 
-        <p>Willkommen zu BSN-Tools.</p>
+            <div class="text">
+                <p>
+                    <strong>Willkommen</strong>
+                </p>
+
+                <p>Willkommen zu BSN-Tools.</p>
+            </div>
+        </div>
 
 
         <div class="action-buttons">
@@ -17,7 +23,7 @@
                 OK
             </button>
 
-            <button>
+            <button @onclick="OnTestClick">
                 Test
             </button>
         </div>
@@ -26,3 +32,18 @@
     </Content>
 </Window>
 
+@code {
+    private async Task OnTestClick()
+    {
+        // Der Code "wartet" hier, bis der Nutzer geklickt hat
+        var result = await MessageBox.ShowAsync("Fehler", "Möchten Sie fortfahren?", MessageBoxButtons.YesNo);
+
+        if (result == MessageBoxResult.Yes)
+        {
+            Console.WriteLine("y");
+        } else
+        {
+            Console.WriteLine("n");
+        }
+    }
+}

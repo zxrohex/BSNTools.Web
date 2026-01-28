@@ -15,6 +15,12 @@ die Notwendigkeit von .NET (10) und wie es gebundled wird).
 ### Status
 Derzeit in aktiver und sehr früher, experimentieller Entwicklung. Weitere Werkzeuge und Funktionen werden in zukünftigen Versionen hinzugefügt.
 
+### Roadmap
+- Hinzufügen weiterer Werkzeuge (z.B. IPv6-Support, Binärtabelle, usw).
+- Verbesserung der UI/UX
+  - Ziel: eine vollfunktionale Replika von Windows NT 4.0
+    - Plan für Ausgliederung in separate Repositories
+
 ### Installation
 kommt bald
 

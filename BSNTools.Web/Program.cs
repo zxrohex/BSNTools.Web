@@ -1,3 +1,4 @@
+using BSNTools.Web.Core;
 using BSNTools.Web.Core.Config;
 
 using Microsoft.AspNetCore.Components.Web;
@@ -17,9 +18,12 @@ namespace BSNTools.Web
 
             builder.Services.AddSingleton<AppConfig>();
 
+            builder.Services.AddScoped<MessageBoxService>();
+
             var host = builder.Build();
 
             await host.Services.GetRequiredService<AppConfig>().LoadSettingsAsync();
+     
 
             await host.RunAsync();  
         }

@@ -1,0 +1,21 @@
+div.layout {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 10px;
+    gap: 20px;
+
+
+    img.banner {
+        width: 126px;
+        border: 2px groove rgb(230, 230, 230);
+    }
+
+    div.text {
+        width: 250px;
+        height: max-content;
+    }
+}

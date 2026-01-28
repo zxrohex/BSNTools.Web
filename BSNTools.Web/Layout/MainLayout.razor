@@ -1,68 +1,116 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
 
+
+
 <div class="app-container">
-    <div class="app-main">
 
-		<div class="desktop">
-			@Body
+    <ErrorBoundary>
+        <ChildContent>
+            <BSNTools.Web.Components.MessageBox />
+            <div class="app-main">
 
-			<div class="taskbar">
-				<div class="taskbar-items">
-					<NavLink ActiveClass="active" Match="NavLinkMatch.All" href="/">
-						Home/Index
-					</NavLink>
+                <div class="desktop">
+                    @Body
 
-					<NavLink ActiveClass="active" href="/conversion">
-						Konversion
-					</NavLink>
+                    <div class="taskbar">
+                        <div class="taskbar-items">
+                            <NavLink ActiveClass="active" Match="NavLinkMatch.All" href="/">
+                                Home/Index
+                            </NavLink>
 
-					<NavLink ActiveClass="active" href="/ip">
-						IP-Tools
-					</NavLink>
+                            <NavLink ActiveClass="active" href="/conversion">
+                                Konversion
+                            </NavLink>
 
-					<NavLink ActiveClass="active" href="/settings">
-						Einstellungen
-					</NavLink>
+                            <NavLink ActiveClass="active" href="/ip">
+                                IP-Tools
+                            </NavLink>
 
-					<NavLink ActiveClass="active" href="/about">
-						Über
-					</NavLink>
+                            <NavLink ActiveClass="active" href="/settings">
+                                Einstellungen
+                            </NavLink>
 
-				</div>
+                            <NavLink ActiveClass="active" href="/about">
+                                Über
+                            </NavLink>
 
-				<div class="taskbar-tray">
-					<div class="taskbar-clock">
-						<span id="tray-clock">@currentTime</span>
-					</div>
-				</div>
-			</div>
-		</div>      
-    </div>
+                        </div>
+
+                        <div class="taskbar-tray">
+                            <div class="taskbar-clock">
+                                <span id="tray-clock">@currentTime</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ChildContent>
+        <ErrorContent>
+            <div class="error-screen">
+                @{
+                    var randomAddresses = GenerateRandomErrorAddreses();
+                }
+
+                <p>*** STOP: 0x@(randomAddresses[0]) (@string.Join(", ", @randomAddresses.Skip(1).Take(4).Select(a => "0x" + a)))</p>
+
+                <p>
+                    @context.Message
+                </p>
+
+                <p>
+                    @context.Source
+                </p>
+
+                <p>
+                    @context.StackTrace
+                </p>
+
+                <p>
+                    Applikation muss neu geladen werden. Bitte F5 drücken oder die Seite neu laden.
+                </p>
+            </div>
+        </ErrorContent>
+    </ErrorBoundary>
+
+
 </div>
 
 @code {
-	System.Timers.Timer timer = new System.Timers.Timer(1000);
+    System.Timers.Timer timer = new System.Timers.Timer(1000);
 
     string currentTime = DateTime.Now.ToString("HH:mm");
 
-	protected override Task OnInitializedAsync()
-	{
-		timer.Elapsed += async (sender, e) =>
-		{
-			await InvokeAsync(() =>
-			{
-				currentTime = DateTime.Now.ToString("HH:mm");
-			});
-        };
+    List<string> GenerateRandomErrorAddreses()
+    {
+        List<string> addresses = new List<string>();
 
-		timer.Start();
+        for (int i = 0; i < 64; i++)
+        {
+            addresses.Add(Random.Shared.GetHexString(8, false));
 
-		return base.OnInitializedAsync();
+        }
+
+        return addresses;
     }
 
-	protected override async Task OnParametersSetAsync()
-	{
-		
+    protected override Task OnInitializedAsync()
+    {
+        timer.Elapsed += async (sender, e) =>
+        {
+            await InvokeAsync(() =>
+            {
+                currentTime = DateTime.Now.ToString("HH:mm");
+            });
+        };
+
+        timer.Start();
+
+        return base.OnInitializedAsync();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+
     }
 }
