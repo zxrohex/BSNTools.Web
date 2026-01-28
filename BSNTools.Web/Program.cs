@@ -1,6 +1,3 @@
-using BSNTools.Web.Core;
-using BSNTools.Web.Core.Config;
-
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -16,16 +13,7 @@ namespace BSNTools.Web
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-            builder.Services.AddSingleton<AppConfig>();
-
-            builder.Services.AddScoped<MessageBoxService>();
-
-            var host = builder.Build();
-
-            await host.Services.GetRequiredService<AppConfig>().LoadSettingsAsync();
-     
-
-            await host.RunAsync();  
+            await builder.Build().RunAsync();
         }
     }
 }
