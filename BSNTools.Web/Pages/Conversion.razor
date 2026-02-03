@@ -72,6 +72,39 @@
                     </div>
                 </PanelBox>
             </div>
+
+
+            <div class="row">
+                <p>
+                    <span>Download-Rechner</span>
+                </p>
+
+
+
+                <PanelBox Title="Download-Grösse" Attributes="panelStyling">
+
+                    <div class="units-container">
+                        <Win286InputNumber @bind-Value:get="(int)dlFirstUnitsValue.As(dlSelectedSourceUnit)" @bind-Value:set="(v) => rawDlFirstUnitsValue = UnitsNet.Information.From(v, dlSelectedSourceUnit).Bits" Min="0" Max="9999999" Format="Win286InputNumberFormat.Decimal" />
+
+                        <Win286ComboBox TItem="InformationUnit" Items="units" @bind-SelectedItem="dlSelectedSourceUnit" />
+                    </div>
+
+                </PanelBox>
+
+                <PanelBox Title="Geschwindigkeit" Attributes="panelStyling">
+                    <div class="units-container">
+                        <Win286InputNumber @bind-Value:get="(int)dlSecondUnitsValue.As(dlSelectedSpeedUnit)" @bind-Value:set="(v) =>rawDlSecondUnitsValue = UnitsNet.BitRate.From(v, dlSelectedSpeedUnit).BitsPerSecond" Min="0" Max="9999999" Format="Win286InputNumberFormat.Decimal" />
+
+                        <Win286ComboBox TItem="BitRateUnit" Items="bitRateUnits" @bind-SelectedItem="dlSelectedSpeedUnit" />
+                    </div>
+                </PanelBox>
+
+                
+
+                <p>
+                    Dauer: @(dlTime.Hours > 0 ? $"{dlTime.Hours} Stunde(n), " : "") @(dlTime.Minutes > 0 ? $"{dlTime.Minutes} Minute(n), " : "") @dlTime.Seconds Sekunde(n)
+                </p>
+            </div>
         </div>
 
 
@@ -99,7 +132,17 @@
 
     private double rawUnitsValue = 8.0;
 
+    private double rawDlFirstUnitsValue = 8.0;
+
+    private double rawDlSecondUnitsValue = 8.0;
+
+    private UnitsNet.Information dlFirstUnitsValue => UnitsNet.Information.FromBits(rawDlFirstUnitsValue);
+
+    private UnitsNet.BitRate dlSecondUnitsValue => UnitsNet.BitRate.FromBitsPerSecond(rawDlSecondUnitsValue);
+
     private UnitsNet.Information unitsValue => UnitsNet.Information.FromBits(rawUnitsValue);
+
+    private TimeSpan dlTime => TimeSpan.FromSeconds(rawDlFirstUnitsValue / rawDlSecondUnitsValue);
 
     private int myCount = 10;
     private int rawCount = 0;
@@ -133,6 +176,13 @@
 
     List<InformationUnit> units = Enum.GetValues<InformationUnit>().ToList();
 
+    List<BitRateUnit> bitRateUnits = Enum.GetValues<BitRateUnit>().ToList();
+
     InformationUnit selectedUnit = InformationUnit.Bit;
     InformationUnit selectedUnit2 = InformationUnit.Byte;
+
+
+    InformationUnit dlSelectedSourceUnit = InformationUnit.Bit;
+
+    BitRateUnit dlSelectedSpeedUnit = BitRateUnit.BitPerSecond;
 }

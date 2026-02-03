@@ -1,0 +1,39 @@
+﻿@page "/write"
+@page "/write/{*filename}"
+@inject HttpClient HttpClient
+@inject MessageBoxService MessageBox
+@inject CustomDialogService CustomDialog
+
+<PageTitle>Notepad</PageTitle>
+
+@{
+    string title = "Notepad - " + (string.IsNullOrEmpty(FileName) == true ? "Neues Textdokument" : FileName); 
+}
+
+<Window Title="@title">
+    <MenuBar>
+        <WindowMenuBar>
+
+            <MenuBarItem Title="Datei">
+                <DropdownItem>
+                    <span>...</span>
+                </DropdownItem>
+            </MenuBarItem>
+
+            <MenuBarItem Title="Spezial">
+                <DropdownItem>
+                    <span>...</span>
+                </DropdownItem>
+            </MenuBarItem>
+
+        </WindowMenuBar>
+    </MenuBar>
+
+    <Content>
+       @((MarkupString)Markdig.Markdown.ToHtml(FileContent))
+    </Content>
+</Window>
+
+@code {
+
+}

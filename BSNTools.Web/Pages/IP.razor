@@ -1,5 +1,6 @@
 ﻿@page "/ip"
 @inject MessageBoxService MessageBox
+@inject InputBoxService InputBox
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
 
@@ -10,9 +11,9 @@
     <MenuBar>
         <WindowMenuBar>
 
-            <MenuBarItem Title="Einstellungen">
-                <DropdownItem>
-                    <span>...</span>
+            <MenuBarItem Title="Aktionen">
+                <DropdownItem OnClick="OnSubnettingClick">
+                    <span>Subnetze berechnen</span>
                 </DropdownItem>
             </MenuBarItem>
 
@@ -127,11 +128,11 @@
                             @if (!string.IsNullOrEmpty(CIDR))
                             {
                                 subnets = ipNetwork.Subnet(Convert.ToByte(CIDR));
-
-                                <div style="margin-top: 10px;">
+                                 
+                                <div style="margin-top: 10px; height: max-content; overflow-y: hidden;">
                                     <strong>@subnets.Count Subnetze:</strong>
 
-                                    <div>
+                                    <div style="height: fit-content; overflow-y: hidden;">
                                         @foreach (IPNetwork2 subnet in subnets.ToArray())
                                         {
                                             <p>@subnet.First.ToString()</p>
@@ -144,6 +145,7 @@
 
                 }
             </div>
+
             <div class="action-buttons">
                 <button @onclick="OnCalculateClick">
                     Berechnen
@@ -179,7 +181,8 @@
         {
             NavigationManager.NavigateTo(NavigationManager.GetUriWithQueryParameters(new Dictionary<string, object?>
             {
-                ["ip"] = ipAddress
+                ["ip"] = ipAddress,
+                ["cidr"] = null
             }));
 
 
@@ -188,7 +191,7 @@
 
     private async Task OnSubnettingClick()
     {
-        string cidr = await JSRuntime.InvokeAsync<string>("prompt", "Geben Sie die CIDR ein:");
+        string cidr = await InputBox.ShowAsync("Subnetz-CIDR eingeben", "Gebe die CIDR ein:");
 
         if (!string.IsNullOrEmpty(cidr))
         {

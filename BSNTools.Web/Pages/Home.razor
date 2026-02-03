@@ -1,5 +1,10 @@
 ﻿@page "/"
 @inject MessageBoxService MessageBox
+@inject InputBoxService InputBox
+@inject CustomDialogService CustomDialog
+@inject NavigationManager NavigationManager
+@inject HttpClient HttpClient
+
 <PageTitle>Home</PageTitle>
 
 <Window Title="BSN-Tools">
@@ -36,28 +41,44 @@
             </div>
 
             <div class="listing">
-                <button class="listing-item">
+                <button class="listing-item" @onclick="@(() => Navigate("/conversion"))">
                     <span>UMRECHNER.EXE</span>
                 </button>
 
-                <button class="listing-item">
+                <button class="listing-item" @onclick="@(() => Navigate("/ip"))">
                     <span>IPRECHNER.EXE</span>
                 </button>
 
-                <button class="listing-item">
+                <button class="listing-item" @onclick="@(() => Navigate("/help"))">
                     <span>HILFE.EXE</span>
                 </button>
 
-                <button class="listing-item">
+                <button class="listing-item" @onclick="@(() => Navigate("/about"))">
                     <span>ABOUT.EXE</span>
                 </button>
 
-                <button class="listing-item">
+                <button class="listing-item" @onclick="@(() => Navigate("/settings"))">
                     <span>SETTINGS.EXE</span>
                 </button>
 
-                <button class="listing-item">
+                <button class="listing-item" @onclick="@(() => Navigate("/debug"))">
                     <span>DEBUG.EXE</span>
+                </button>
+
+
+                @foreach (string i in docs)
+                {
+                    <button class="listing-item" @onclick="@(() => Navigate("/write/" + i))">
+                        <span>@i</span>
+                    </button>
+                }
+
+                <button class="listing-item" @onclick="OnTestClick">
+                    <span>INPUTBOXTEST.EXE</span>
+                </button>
+
+                <button class="listing-item" @onclick="test2">
+                    <span>CUSTOMDIALOG.EXE</span>
                 </button>
             </div>
        </div>
@@ -67,17 +88,52 @@
 </Window>
 
 @code {
+    List<string> docs = new List<string>();
+
+    private async Task Navigate(string url)
+    {
+        NavigationManager.NavigateTo(url);
+    }
+
     private async Task OnTestClick()
     {
         // Der Code "wartet" hier, bis der Nutzer geklickt hat
-        var result = await MessageBox.ShowAsync("Fehler", "Möchten Sie fortfahren?", MessageBoxButtons.YesNo);
-
-        if (result == MessageBoxResult.Yes)
+        // Einfache Verwendung
+        var name = await InputBox.ShowAsync("Eingabe", "Bitte Namen eingeben:");
+        if (name != null)
         {
-            Console.WriteLine("y");
-        } else
-        {
-            Console.WriteLine("n");
+            await MessageBox.ShowAsync("test", name);
         }
+        else
+        {
+            // Benutzer hat abgebrochen
+        }
+
+        // Mit Standardwert
+        var result = await InputBox.ShowAsync("Titel", "Nachricht", "Standardwert");
+
+        await MessageBox.ShowAsync("test", result);
+    }
+
+    async Task test2()
+    {
+        // Beliebiger Inhalt mit beliebigem Rueckgabewert
+        string myValue = "";
+
+        var result = await CustomDialog.ShowAsync<string>("Mein Dialog", (@<div>
+                <p>Beliebiger Inhalt hier</p>
+                <input @bind="myValue" />
+                <button @onclick="() => CustomDialog.Close(myValue)">Speichern</button>
+                <button @onclick="() => CustomDialog.Close(null)">Abbrechen</button>
+            </div>
+    ), width: 500);
+
+        await MessageBox.ShowAsync("test", result);
+    }
+
+
+    protected override async Task OnParametersSetAsync()
+    {
+        docs = await HttpClient.GetFromJsonAsync<List<string>>("api/docs/GetAllDocs");
     }
 }

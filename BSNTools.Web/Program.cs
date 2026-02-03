@@ -26,7 +26,7 @@ namespace BSNTools.Web
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             
             LogService.Log("Registering AppConfig", area: LogArea.Framework);
-
+           
             builder.Services.AddSingleton<AppConfig>();
 
             LogService.Log("Registering MessageBoxService", area: LogArea.Framework);
