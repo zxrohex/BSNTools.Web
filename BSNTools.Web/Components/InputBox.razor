@@ -1,0 +1,84 @@
+@using BSNTools.Web.Core
+@inject InputBoxService InputBoxService
+@implements IDisposable
+
+@if (isVisible)
+{
+    <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: repeating-conic-gradient(transparent 0% 25%, rgba(0, 0, 0, 1) 0% 50%) 50% / 4px 6px; z-index: 9999;">
+
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border-left: 2px solid black; border-right: 2px solid black;">
+            <Window Title="@title" Width="350">
+                <Content>
+                    <div style="padding: 10px;">
+                        <p style="margin-bottom: 10px;">@message</p>
+
+                        <input type="text" @bind="inputValue" @bind:event="oninput"
+                               @onkeydown="HandleKeyDown"
+                               style="width: 100%; box-sizing: border-box; margin-bottom: 15px;" />
+
+                        <div class="action-buttons" style="justify-content: center;">
+                            <button @onclick="Confirm">OK</button>
+                            <button @onclick="Cancel">Abbrechen</button>
+                        </div>
+                    </div>
+                </Content>
+            </Window>
+        </div>
+    </div>
+}
+
+@code {
+    private bool isVisible;
+    private string title = "";
+    private string message = "";
+    private string inputValue = "";
+
+    protected override void OnInitialized()
+    {
+        InputBoxService.OnShow += Show;
+        InputBoxService.OnHide += Hide;
+    }
+
+    private void Show(string t, string m, string defaultValue)
+    {
+        title = t;
+        message = m;
+        inputValue = defaultValue;
+        isVisible = true;
+        StateHasChanged();
+    }
+
+    private void Hide()
+    {
+        isVisible = false;
+        StateHasChanged();
+    }
+
+    private void HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            Confirm();
+        }
+        else if (e.Key == "Escape")
+        {
+            Cancel();
+        }
+    }
+
+    private void Confirm()
+    {
+        InputBoxService.Close(inputValue);
+    }
+
+    private void Cancel()
+    {
+        InputBoxService.Close(null);
+    }
+
+    public void Dispose()
+    {
+        InputBoxService.OnShow -= Show;
+        InputBoxService.OnHide -= Hide;
+    }
+}

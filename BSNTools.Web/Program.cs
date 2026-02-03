@@ -33,6 +33,14 @@ namespace BSNTools.Web
 
             builder.Services.AddScoped<MessageBoxService>();
 
+            LogService.Log("Registering InputBoxService", area: LogArea.Framework);
+
+            builder.Services.AddScoped<InputBoxService>();
+
+            LogService.Log("Registering CustomDialogService", area: LogArea.Framework);
+
+            builder.Services.AddScoped<CustomDialogService>();
+
             LogService.Log("Building Host", area: LogArea.Framework);
 
             var host = builder.Build();
