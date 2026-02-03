@@ -1,0 +1,11 @@
+﻿div {
+    width: 500px;
+    height: 300px;
+    overflow-y: scroll;
+}
+
+    div span {
+        display: block;
+        font-family: monospace;
+        white-space: pre;
+    }

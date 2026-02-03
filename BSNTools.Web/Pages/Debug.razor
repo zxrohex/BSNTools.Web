@@ -1,0 +1,19 @@
+﻿@page "/debug"
+
+<PageTitle>Debug</PageTitle>
+
+<Window Title="Debug">
+
+    <Content>
+        <div>
+            @foreach (string i in LogService.PrintAllLogs())
+            {
+                <span>@i</span>
+            }
+        </div>
+    </Content>
+</Window>
+
+@code {
+    Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version!;
+}

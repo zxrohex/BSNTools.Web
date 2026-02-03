@@ -42,27 +42,30 @@
         @if (ipNetwork != null)
         {
             <PanelBox>
-                @if (subnets != null)
+                @if (!string.IsNullOrEmpty(CIDR))
                 {
+                    subnets = ipNetwork.Subnet(Convert.ToByte(CIDR));
+
 
                     <NT4ComboBox Items="subnets.ToList()" @bind-SelectedItem="selected"></NT4ComboBox>
 
                     @if (selected != null)
                     {
-                        <div style="margin-top: 10px;">
-                            <strong>Ausgewähltes Subnetz:</strong>
-                            <ul>
-                                <li><strong>Adresse: </strong> @selected.ToString()</li>
-                                <li><strong>Subnetzmaske: </strong> @selected.Netmask.ToString()</li>
-                                <li><strong>Netzwerkadresse: </strong> @selected.Network.ToString()</li>
-                                <li><strong>Broadcastadresse: </strong> @selected.Broadcast.ToString()</li>
-                                <li><strong>Erste Adresse: </strong> @selected.First.ToString()</li>
-                                <li><strong>Erste nutzbare Adresse: </strong> @selected.FirstUsable.ToString()</li>
-                                <li><strong>Letzte Adresse: </strong> @selected.Last.ToString()</li>
-                                <li><strong>Letzte nutzbare Adresse: </strong> @selected.LastUsable.ToString()</li>
-                                <li><strong>Insgesamt / Nutzbar: </strong> @selected.Total.ToString() / @selected.Usable.ToString()</li>
-                            </ul>
-                        </div>
+                        <code style="margin-top: 10px;">
+                            <div>
+                                <strong>Ausgewähltes Subnetz:</strong>
+                            </div>
+                            <div><strong>Adresse: </strong> @selected.ToString()</div>
+                            <div><strong>Subnetzmaske: </strong> @selected.Netmask.ToString()</div>
+                            <div><strong>Netzwerkadresse: </strong> @selected.Network.ToString()</div>
+                            <div><strong>Broadcastadresse: </strong> @selected.Broadcast.ToString()</div>
+                            <div><strong>Erste Adresse: </strong> @selected.First.ToString()</div>
+                            <div><strong>Erste nutzbare Adresse: </strong> @selected.FirstUsable.ToString()</div>
+                            <div><strong>Letzte Adresse: </strong> @selected.Last.ToString()</div>
+                            <div><strong>Letzte nutzbare Adresse: </strong> @selected.LastUsable.ToString()</div>
+                            <div><strong>Insgesamt / Nutzbar: </strong> @selected.Total.ToString() / @selected.Usable.ToString()</div>
+
+                        </code>
 
                     }
                 }
@@ -115,14 +118,18 @@
 
                     </div>
 
-                    @if (subnets != null)
+                    @if (!string.IsNullOrEmpty(CIDR))
                     {
+                        subnets = ipNetwork.Subnet(Convert.ToByte(CIDR));
+
                         <div style="margin-top: 10px;">
+                            <p>@subnets.Count</p>
+
                             <strong>Subnetze:</strong>
                             <ul>
-                                @foreach (var subnet in subnets)
+                                @foreach (IPNetwork2 subnet in subnets.ToArray())
                                 {
-                                    <li>@subnet.ToString()</li>
+                                    <li>@subnet.First.ToString()</li>
                                 }
                             </ul>
                         </div>
@@ -155,6 +162,8 @@
 
     IPNetworkCollection subnets;
 
+    byte cidrParsed;
+
 
     private async Task OnCalculateClick()
     {
@@ -182,6 +191,8 @@
                     ["ip"] = ipAddress,
                     ["cidr"] = cidr
                 }));
+
+                StateHasChanged();
             });
         }
 

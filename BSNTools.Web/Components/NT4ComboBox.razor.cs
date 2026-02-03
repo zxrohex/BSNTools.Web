@@ -22,43 +22,20 @@ namespace BSNTools.Web.Components
         [Parameter]
         public List<TItem> Items { get; set; } = new List<TItem>();
 
+        [Parameter]
+        public Func<TItem, string> ItemTextSelector { get; set; }
+
+        private int SelectedIndex { get; set; } = -1;
+
         private async Task OnInputChange(ChangeEventArgs e)
         {
-            if (e.Value is not null)
+            if (e.Value is not null && int.TryParse(e.Value.ToString(), out var index))
             {
-                if (e.Value is TItem newValue)
+                if (index >= 0 && index < Items.Count)
                 {
-                    SelectedItem = newValue;
-                    await SelectedItemChanged.InvokeAsync(newValue);
-                }
-                else if (typeof(TItem).IsEnum)
-                {
-                    {
-                        try
-                        {
-                            TItem enumValue = (TItem)Enum.Parse(typeof(TItem), e.Value.ToString() ?? string.Empty);
-                            SelectedItem = enumValue;
-                            await SelectedItemChanged.InvokeAsync(enumValue);
-                        }
-                        catch
-                        {
-                            // Ignore invalid input
-                        }
-                    }
-                } 
-                else
-                {
-                    try
-                    {
-                        SelectedItem = (TItem)e.Value;
-
-                        await SelectedItemChanged.InvokeAsync(SelectedItem);
-                    }
-                    catch (Exception)
-                    {
-
-                        
-                    }
+                    SelectedIndex = index;
+                    SelectedItem = Items[index];
+                    await SelectedItemChanged.InvokeAsync(SelectedItem);
                 }
             }
         }
@@ -67,9 +44,19 @@ namespace BSNTools.Web.Components
         {
             if (Items != null && Items.Count > 0)
             {
-                SelectedItem ??= Items[0];
+                var comparer = EqualityComparer<TItem>.Default;
+                var index = Items.FindIndex(item => comparer.Equals(item, SelectedItem));
 
-                await SelectedItemChanged.InvokeAsync(SelectedItem);
+                if (index >= 0)
+                {
+                    SelectedIndex = index;
+                }
+                else
+                {
+                    SelectedIndex = 0;
+                    SelectedItem = Items[0];
+                    await SelectedItemChanged.InvokeAsync(SelectedItem);
+                }
             }
         }
 
