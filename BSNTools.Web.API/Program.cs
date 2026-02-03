@@ -13,7 +13,7 @@ namespace BSNTools.Web.API
             builder.Services.AddRazorPages();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
-
+ 
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
@@ -28,7 +28,6 @@ namespace BSNTools.Web.API
             }
 
             app.UseHttpsRedirection();
-            app.UseAuthorization();
             app.UseBlazorFrameworkFiles(); // Serves Blazor WASM files
             app.UseStaticFiles();
 
@@ -36,7 +35,7 @@ namespace BSNTools.Web.API
 
             app.MapRazorPages();
             app.MapControllers();
-            app.MapFallbackToFile("index.html"); // F
+            app.MapFallbackToFile("index.html"); // Fallback for client-side routing
 
             app.Run();
         }
