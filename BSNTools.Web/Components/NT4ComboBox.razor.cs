@@ -45,7 +45,31 @@ namespace BSNTools.Web.Components
                             // Ignore invalid input
                         }
                     }
+                } 
+                else
+                {
+                    try
+                    {
+                        SelectedItem = (TItem)e.Value;
+
+                        await SelectedItemChanged.InvokeAsync(SelectedItem);
+                    }
+                    catch (Exception)
+                    {
+
+                        
+                    }
                 }
+            }
+        }
+
+        protected override async Task OnParametersSetAsync()
+        {
+            if (Items != null && Items.Count > 0)
+            {
+                SelectedItem ??= Items[0];
+
+                await SelectedItemChanged.InvokeAsync(SelectedItem);
             }
         }
 

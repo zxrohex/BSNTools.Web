@@ -1,10 +1,10 @@
 ﻿@typeparam TItem
 
 <div class="combobox-input-wrapper">
-    <select value="@SelectedItem" @onchange="OnInputChange" >
+    <select value="@SelectedItem.ToString()" @onchange="OnInputChange">
         @foreach (var item in Items)
         {
-            <option value="@item" selected="@(item.Equals(SelectedItem) ? "selected" : null)">@item</option>
+            <option value="@item.ToString()" selected="@(item.Equals(SelectedItem) ? "selected" : null)">@item.ToString()</option>
         }
 
     </select>

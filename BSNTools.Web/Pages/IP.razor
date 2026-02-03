@@ -42,13 +42,78 @@
         @if (ipNetwork != null)
         {
             <PanelBox>
-                <code>
-                    @foreach (var prop in ipNetwork.GetType().GetProperties())
+                @if (subnets != null)
+                {
+
+                    <NT4ComboBox Items="subnets.ToList()" @bind-SelectedItem="selected"></NT4ComboBox>
+
+                    @if (selected != null)
                     {
-                        <div>
-                            <strong>@prop.Name:</strong> @prop.GetValue(ipNetwork)
+                        <div style="margin-top: 10px;">
+                            <strong>Ausgewähltes Subnetz:</strong>
+                            <ul>
+                                <li><strong>Adresse: </strong> @selected.ToString()</li>
+                                <li><strong>Subnetzmaske: </strong> @selected.Netmask.ToString()</li>
+                                <li><strong>Netzwerkadresse: </strong> @selected.Network.ToString()</li>
+                                <li><strong>Broadcastadresse: </strong> @selected.Broadcast.ToString()</li>
+                                <li><strong>Erste Adresse: </strong> @selected.First.ToString()</li>
+                                <li><strong>Erste nutzbare Adresse: </strong> @selected.FirstUsable.ToString()</li>
+                                <li><strong>Letzte Adresse: </strong> @selected.Last.ToString()</li>
+                                <li><strong>Letzte nutzbare Adresse: </strong> @selected.LastUsable.ToString()</li>
+                                <li><strong>Insgesamt / Nutzbar: </strong> @selected.Total.ToString() / @selected.Usable.ToString()</li>
+                            </ul>
                         </div>
+
                     }
+                }
+
+                <code>
+
+                    <div>
+                        <strong>Adresse: </strong> @ipNetwork.ToString()
+
+                    </div>
+
+                    <div>
+                        <strong>Subnetzmaske: </strong> @ipNetwork.Netmask.ToString()
+
+                    </div>
+
+                    <div>
+                        <strong>Netzwerkadresse: </strong> @ipNetwork.Network.ToString()
+
+                    </div>
+
+                    <div>
+                        <strong>Broadcastadresse: </strong> @ipNetwork.Broadcast.ToString()
+
+                    </div>
+
+                    <div>
+                        <strong>Erste Adresse: </strong> @ipNetwork.First.ToString()
+
+                    </div>
+
+                    <div>
+                        <strong>Erste nutzbare Adresse: </strong> @ipNetwork.FirstUsable.ToString()
+
+                    </div>
+
+                    <div>
+                        <strong>Letzte Adresse: </strong> @ipNetwork.Last.ToString()
+
+                    </div>
+
+                    <div>
+                        <strong>Letzte nutzbare Adresse: </strong> @ipNetwork.LastUsable.ToString()
+
+                    </div>
+
+
+                    <div>
+                        <strong>Insgesamt / Nutzbar: </strong> @ipNetwork.Total.ToString() / @ipNetwork.Usable.ToString()
+
+                    </div>
 
                     @if (subnets != null)
                     {
@@ -86,6 +151,8 @@
 
     IPNetwork2 ipNetwork;
 
+    IPNetwork2 selected;
+
     IPNetworkCollection subnets;
 
 
@@ -119,6 +186,6 @@
         }
 
         // Der Code "wartet" hier, bis der Nutzer geklickt hat
-  
+
     }
 }
