@@ -26,128 +26,136 @@
     </MenuBar>
 
     <Content>
-        <p>
-            <strong>IP-Tools</strong>
-        </p>
+        <div class="content-container">
 
+            <PanelBox Title="IP-Adresse/CIDR">
+                <input type="text" @bind-value="ipAddress">
 
-        <PanelBox Title="IP-Adresse/CIDR">
-            <input type="text" @bind-value="ipAddress">
+                <button @onclick="OnCalculateClick">
+                    Berechnen
+                </button>
+            </PanelBox>
 
-            <button @onclick="OnCalculateClick">
-                Berechnen
-            </button>
-        </PanelBox>
-
-        @if (ipNetwork != null)
-        {
-            <PanelBox>
-                @if (!string.IsNullOrEmpty(CIDR))
+            <div class="panels-container">
+                @if (ipNetwork != null)
                 {
-                    subnets = ipNetwork.Subnet(Convert.ToByte(CIDR));
-
-
-                    <NT4ComboBox Items="subnets.ToList()" @bind-SelectedItem="selected"></NT4ComboBox>
-
-                    @if (selected != null)
-                    {
-                        <code style="margin-top: 10px;">
-                            <div>
-                                <strong>Ausgewähltes Subnetz:</strong>
-                            </div>
-                            <div><strong>Adresse: </strong> @selected.ToString()</div>
-                            <div><strong>Subnetzmaske: </strong> @selected.Netmask.ToString()</div>
-                            <div><strong>Netzwerkadresse: </strong> @selected.Network.ToString()</div>
-                            <div><strong>Broadcastadresse: </strong> @selected.Broadcast.ToString()</div>
-                            <div><strong>Erste Adresse: </strong> @selected.First.ToString()</div>
-                            <div><strong>Erste nutzbare Adresse: </strong> @selected.FirstUsable.ToString()</div>
-                            <div><strong>Letzte Adresse: </strong> @selected.Last.ToString()</div>
-                            <div><strong>Letzte nutzbare Adresse: </strong> @selected.LastUsable.ToString()</div>
-                            <div><strong>Insgesamt / Nutzbar: </strong> @selected.Total.ToString() / @selected.Usable.ToString()</div>
-
-                        </code>
-
-                    }
-                }
-
-                <code>
-
-                    <div>
-                        <strong>Adresse: </strong> @ipNetwork.ToString()
-
-                    </div>
-
-                    <div>
-                        <strong>Subnetzmaske: </strong> @ipNetwork.Netmask.ToString()
-
-                    </div>
-
-                    <div>
-                        <strong>Netzwerkadresse: </strong> @ipNetwork.Network.ToString()
-
-                    </div>
-
-                    <div>
-                        <strong>Broadcastadresse: </strong> @ipNetwork.Broadcast.ToString()
-
-                    </div>
-
-                    <div>
-                        <strong>Erste Adresse: </strong> @ipNetwork.First.ToString()
-
-                    </div>
-
-                    <div>
-                        <strong>Erste nutzbare Adresse: </strong> @ipNetwork.FirstUsable.ToString()
-
-                    </div>
-
-                    <div>
-                        <strong>Letzte Adresse: </strong> @ipNetwork.Last.ToString()
-
-                    </div>
-
-                    <div>
-                        <strong>Letzte nutzbare Adresse: </strong> @ipNetwork.LastUsable.ToString()
-
-                    </div>
-
-
-                    <div>
-                        <strong>Insgesamt / Nutzbar: </strong> @ipNetwork.Total.ToString() / @ipNetwork.Usable.ToString()
-
-                    </div>
-
                     @if (!string.IsNullOrEmpty(CIDR))
                     {
                         subnets = ipNetwork.Subnet(Convert.ToByte(CIDR));
 
-                        <div style="margin-top: 10px;">
-                            <p>@subnets.Count</p>
 
-                            <strong>Subnetze:</strong>
-                            <ul>
-                                @foreach (IPNetwork2 subnet in subnets.ToArray())
+                        <PanelBox Title="Subnetz" Attributes="@(new Styling() { Width = "500px", Height = "550px" })">
+                            <div class="subnet-panel-inner">
+                                <div class="subnet-selector-inner">
+                                    <Win286ComboBox Items="subnets.ToList()" @bind-SelectedItem="selected"></Win286ComboBox>
+                                </div>
+
+                                @if (selected != null)
                                 {
-                                    <li>@subnet.First.ToString()</li>
+                                    <code style="margin-top: 10px;">
+                                        <div>
+                                            <strong>Ausgewähltes Subnetz:</strong>
+                                        </div>
+                                        <div><strong>Adresse: </strong> @selected.ToString()</div>
+                                        <div><strong>Subnetzmaske: </strong> @selected.Netmask.ToString()</div>
+                                        <div><strong>Netzwerkadresse: </strong> @selected.Network.ToString()</div>
+                                        <div><strong>Broadcastadresse: </strong> @selected.Broadcast.ToString()</div>
+                                        <div><strong>Erste Adresse: </strong> @selected.First.ToString()</div>
+                                        <div><strong>Erste nutzbare Adresse: </strong> @selected.FirstUsable.ToString()</div>
+                                        <div><strong>Letzte Adresse: </strong> @selected.Last.ToString()</div>
+                                        <div><strong>Letzte nutzbare Adresse: </strong> @selected.LastUsable.ToString()</div>
+                                        <div><strong>Insgesamt / Nutzbar: </strong> @selected.Total.ToString() / @selected.Usable.ToString()</div>
+
+                                    </code>
+
                                 }
-                            </ul>
-                        </div>
+                            </div>
+                        </PanelBox>
                     }
-                </code>
-            </PanelBox>
-        }
 
 
-        <div class="action-buttons">
-            <button @onclick="OnCalculateClick">
-                Berechnen
-            </button>
+                    <PanelBox Title="Hauptnetz" Attributes="@(new Styling() { Width = "500px", Height = "550px" })">
 
-            <button @onclick="OnSubnettingClick">
-                Subnetting
-            </button>
+                        <code>
+
+                            <div>
+                                <strong>Adresse: </strong> @ipNetwork.ToString()
+
+                            </div>
+
+                            <div>
+                                <strong>Subnetzmaske: </strong> @ipNetwork.Netmask.ToString()
+
+                            </div>
+
+                            <div>
+                                <strong>Netzwerkadresse: </strong> @ipNetwork.Network.ToString()
+
+                            </div>
+
+                            <div>
+                                <strong>Broadcastadresse: </strong> @ipNetwork.Broadcast.ToString()
+
+                            </div>
+
+                            <div>
+                                <strong>Erste Adresse: </strong> @ipNetwork.First.ToString()
+
+                            </div>
+
+                            <div>
+                                <strong>Erste nutzbare Adresse: </strong> @ipNetwork.FirstUsable.ToString()
+
+                            </div>
+
+                            <div>
+                                <strong>Letzte Adresse: </strong> @ipNetwork.Last.ToString()
+
+                            </div>
+
+                            <div>
+                                <strong>Letzte nutzbare Adresse: </strong> @ipNetwork.LastUsable.ToString()
+
+                            </div>
+
+
+                            <div>
+                                <strong>Insgesamt / Nutzbar: </strong> @ipNetwork.Total.ToString() / @ipNetwork.Usable.ToString()
+
+                            </div>
+
+                            @if (!string.IsNullOrEmpty(CIDR))
+                            {
+                                subnets = ipNetwork.Subnet(Convert.ToByte(CIDR));
+
+                                <div style="margin-top: 10px;">
+                                    <strong>@subnets.Count Subnetze:</strong>
+
+                                    <div>
+                                        @foreach (IPNetwork2 subnet in subnets.ToArray())
+                                        {
+                                            <p>@subnet.First.ToString()</p>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </code>
+                    </PanelBox>
+
+                }
+            </div>
+            <div class="action-buttons">
+                <button @onclick="OnCalculateClick">
+                    Berechnen
+                </button>
+
+                <button @onclick="OnSubnettingClick">
+                    Subnetting
+                </button>
+            </div>
         </div>
+
+
 
 
     </Content>

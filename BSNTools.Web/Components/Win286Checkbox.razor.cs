@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace BSNTools.Web.Components
 {
-    public partial class NT4Checkbox : ComponentBase
+    public partial class Win286Checkbox : ComponentBase
     {
         [Parameter]
         public string Text { get; set; }
@@ -22,11 +22,6 @@ namespace BSNTools.Web.Components
 
         [Parameter]
         public EventCallback<bool> IsCheckedChanged { get; set; }
-
-        public NT4Checkbox()
-        {
-
-        }
 
         private async Task OnClick()
         {

@@ -1,4 +1,5 @@
 ﻿@page "/conversion"
+@inject MessageBoxService MessageBox
 
 <PageTitle>Konversion</PageTitle>
 
@@ -22,56 +23,56 @@
     </MenuBar>
 
     <Content>
-       <div class="row-container">
-            <div>
+        <div class="row-container">
+            <div class="row">
                 <p>
-                    <strong>Nummernsystem-Konverter</strong>
+                    <span>Nummernsystem-Konverter</span>
                 </p>
 
                 <PanelBox Title="Binär" Attributes="panelStyling">
-                    <NT4InputNumber @bind-Value="myCount" Min="0" Max="99999999" Format="NT4InputNumberFormat.Binary" />
+                    <Win286InputNumber @bind-Value="myCount" Min="0" Max="99999999" Format="Win286InputNumberFormat.Binary" />
                 </PanelBox>
 
 
                 <PanelBox Title="Dezimal" Attributes="panelStyling">
-                    <NT4InputNumber @bind-Value="myCount" Min="0" Max="9999999" Format="NT4InputNumberFormat.Decimal" />
+                    <Win286InputNumber @bind-Value="myCount" Min="0" Max="9999999" Format="Win286InputNumberFormat.Decimal" />
                 </PanelBox>
 
                 <PanelBox Title="Hex" Attributes="panelStyling">
-                    <NT4InputNumber @bind-Value="myCount" Min="0" Max="9999999" Format="NT4InputNumberFormat.Hexadecimal" />
+                    <Win286InputNumber @bind-Value="myCount" Min="0" Max="9999999" Format="Win286InputNumberFormat.Hexadecimal" />
                 </PanelBox>
 
                 <PanelBox Title="Oktett" Attributes="panelStyling">
-                    <NT4InputNumber @bind-Value="myCount" Min="0" Max="9999999" Format="NT4InputNumberFormat.Octal" />
+                    <Win286InputNumber @bind-Value="myCount" Min="0" Max="9999999" Format="Win286InputNumberFormat.Octal" />
                 </PanelBox>
             </div>
 
-            <div>
+            <div class="row">
                 <p>
-                    <strong>Einheiten-Konverter</strong>
+                    <span>Einheiten-Konverter</span>
                 </p>
 
 
 
                 <PanelBox Title="#1" Attributes="panelStyling">
 
+                    <div class="units-container">
+                        <Win286InputNumber @bind-Value:get="(int)unitsValue.As(selectedUnit)" @bind-Value:set="(v) => rawUnitsValue = UnitsNet.Information.From(v, selectedUnit).Bits" Min="0" Max="9999999" Format="Win286InputNumberFormat.Decimal" />
 
-                    <NT4InputNumber @bind-Value="rawCount" Min="0" Max="9999999" Format="NT4InputNumberFormat.Decimal" />
+                        <Win286ComboBox TItem="InformationUnit" Items="units" @bind-SelectedItem="selectedUnit" />
+                    </div>
 
-                    <NT4ComboBox TItem="InformationUnit" Items="units" @bind-SelectedItem="selectedUnit" />
                 </PanelBox>
 
                 <PanelBox Title="#2" Attributes="panelStyling">
-                    <NT4InputNumber @bind-Value="myCount2" Min="0" Max="9999999" Format="NT4InputNumberFormat.Decimal" />
+                    <div class="units-container">
+                        <Win286InputNumber @bind-Value:get="(int)unitsValue.As(selectedUnit2)" @bind-Value:set="(v) => rawUnitsValue = UnitsNet.Information.From(v, selectedUnit2).Bits" Min="0" Max="9999999" Format="Win286InputNumberFormat.Decimal" />
 
-                    <NT4ComboBox TItem="InformationUnit" Items="units" @bind-SelectedItem="selectedUnit2" />
+                        <Win286ComboBox TItem="InformationUnit" Items="units" @bind-SelectedItem="selectedUnit2" />
+                    </div>
                 </PanelBox>
-
-
-
-                <p>@selectedUnit</p>
             </div>
-       </div>
+        </div>
 
 
 
@@ -80,7 +81,7 @@
                 OK
             </button>
 
-            <button>
+            <button @onclick="OnTestClick">
                 Test
             </button>
         </div>
@@ -96,6 +97,10 @@
         Margin = "5;5;5;5;px",
     };
 
+    private double rawUnitsValue = 8.0;
+
+    private UnitsNet.Information unitsValue => UnitsNet.Information.FromBits(rawUnitsValue);
+
     private int myCount = 10;
     private int rawCount = 0;
     private int myCount2
@@ -104,16 +109,30 @@
         {
             return (int)UnitsNet.Information.From(rawCount, selectedUnit).As(selectedUnit2);
         }
-        set 
+        set
         {
             rawCount = (int)UnitsNet.Information.From(value, selectedUnit2).As(selectedUnit);
         }
     }
 
-     
-     
+    private async Task OnTestClick()
+    {
+        // Der Code "wartet" hier, bis der Nutzer geklickt hat
+        var result = await MessageBox.ShowAsync("Fehler", "Möchten Sie fortfahren?", MessageBoxButtons.YesNo);
+
+        if (result == MessageBoxResult.Yes)
+        {
+            Console.WriteLine("y");
+        }
+        else
+        {
+            Console.WriteLine("n");
+        }
+    }
+
+
     List<InformationUnit> units = Enum.GetValues<InformationUnit>().ToList();
 
-    InformationUnit selectedUnit = InformationUnit.Byte;
-    InformationUnit selectedUnit2 = InformationUnit.Bit;
+    InformationUnit selectedUnit = InformationUnit.Bit;
+    InformationUnit selectedUnit2 = InformationUnit.Byte;
 }

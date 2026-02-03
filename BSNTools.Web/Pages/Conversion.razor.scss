@@ -1,6 +1,6 @@
 ﻿div.row-container {
     width: 100%;
-    height: max-content;
+    height: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -8,14 +8,32 @@
 
     padding: 10px;
 
-    div {
-        width: 200px;
-        height: max-content;
+    div.row {
+        width: 500px;
+        height: auto ;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+
+        p span {
+            
+        }
     }
+}
+div.action-buttons {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+
+div.units-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: center;
 }
 
 .full-width {

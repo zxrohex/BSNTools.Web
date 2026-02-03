@@ -3,30 +3,64 @@
 <PageTitle>Home</PageTitle>
 
 <Window Title="BSN-Tools">
+    <MenuBar>
+        <WindowMenuBar>
+
+            <MenuBarItem Title="Datei">
+                <DropdownItem>
+                    <span>...</span>
+                </DropdownItem>
+            </MenuBarItem>
+
+            <MenuBarItem Title="Spezial">
+                <DropdownItem>
+                    <span>...</span>
+                </DropdownItem>
+            </MenuBarItem>
+
+        </WindowMenuBar>
+    </MenuBar>
+
 
     <Content>
-        <div class="layout">
-            <img class="banner" src="img/banner.png" />
+       <div class="listing-content">
+            <div class="disks-info">
+                <div class="disk active">
+                    <h6>
+                        C
+                    </h6>
 
-            <div class="text">
-                <p>
-                    <strong>Willkommen</strong>
-                </p>
-
-                <p>Willkommen zu BSN-Tools.</p>
+                    <div class="disk-icon">
+                    </div>
+                </div>
             </div>
-        </div>
 
+            <div class="listing">
+                <button class="listing-item">
+                    <span>UMRECHNER.EXE</span>
+                </button>
 
-        <div class="action-buttons">
-            <button>
-                OK
-            </button>
+                <button class="listing-item">
+                    <span>IPRECHNER.EXE</span>
+                </button>
 
-            <button @onclick="OnTestClick">
-                Test
-            </button>
-        </div>
+                <button class="listing-item">
+                    <span>HILFE.EXE</span>
+                </button>
+
+                <button class="listing-item">
+                    <span>ABOUT.EXE</span>
+                </button>
+
+                <button class="listing-item">
+                    <span>SETTINGS.EXE</span>
+                </button>
+
+                <button class="listing-item">
+                    <span>DEBUG.EXE</span>
+                </button>
+            </div>
+       </div>
 
 
     </Content>

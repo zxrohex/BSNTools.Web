@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace BSNTools.Web.Components
 {
-    public enum NT4InputNumberFormat
+    public enum Win286InputNumberFormat
     {
         Decimal,
         Binary,
@@ -18,20 +18,20 @@ namespace BSNTools.Web.Components
         Octal
     }
 
-    public partial class NT4InputNumber : ComponentBase
+    public partial class Win286InputNumber : ComponentBase
     {
         int numberValue = 0;
 
         string frontendValue => Format switch 
         {
-            NT4InputNumberFormat.Binary => Convert.ToString(Value, 2),
-            NT4InputNumberFormat.Hexadecimal => Convert.ToString(Value, 16).ToUpper(),
-            NT4InputNumberFormat.Octal => Convert.ToString(Value, 8),
+            Win286InputNumberFormat.Binary => Convert.ToString(Value, 2),
+            Win286InputNumberFormat.Hexadecimal => Convert.ToString(Value, 16).ToUpper(),
+            Win286InputNumberFormat.Octal => Convert.ToString(Value, 8),
             _ => Value.ToString()
         };
 
         [Parameter]
-        public NT4InputNumberFormat Format { get; set; } = NT4InputNumberFormat.Decimal;
+        public Win286InputNumberFormat Format { get; set; } = Win286InputNumberFormat.Decimal;
 
         [Parameter]
         public int Max { get; set; } = 100;
@@ -45,16 +45,13 @@ namespace BSNTools.Web.Components
         [Parameter]
         public EventCallback<int> ValueChanged { get; set; }
 
-        public NT4InputNumber()
-        {
-            
-        }
+
 
         private async Task OnInputChange(ChangeEventArgs e)
         {
             switch (Format)
             {
-                case NT4InputNumberFormat.Binary:
+                case Win286InputNumberFormat.Binary:
                     try
                     {
                         await UpdateValue(Convert.ToInt32(e.Value?.ToString() ?? "0", 2));
@@ -65,7 +62,7 @@ namespace BSNTools.Web.Components
                     }
 
                     break;
-                case NT4InputNumberFormat.Hexadecimal:
+                case Win286InputNumberFormat.Hexadecimal:
                     try 
                     {
                         await UpdateValue(Convert.ToInt32(e.Value?.ToString() ?? "0", 16));
@@ -75,7 +72,7 @@ namespace BSNTools.Web.Components
                         // Ignore invalid input
                     }
                     break;
-                case NT4InputNumberFormat.Octal:
+                case Win286InputNumberFormat.Octal:
                     try 
                     {
                         await UpdateValue(Convert.ToInt32(e.Value?.ToString() ?? "0", 8));

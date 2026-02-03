@@ -12,16 +12,23 @@
   font-family: "IBM Bios";
   src: url("./fonts/Px437_IBM_BIOS-2x.ttf") format("truetype");
 }
+@font-face {
+  font-family: "fixedsys";
+  src: url("./fonts/FSEX302.ttf") format("truetype");
+}
 * {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  font-family: "Win98 MS Sans Serif";
+  font-family: "fixedsys";
   -webkit-font-smoothing: none;
 }
 
 :root {
-  --mouse-x: 0px;
-  --mouse-y: 0px;
+  --bg-window: white;
+  --window-titlebar-active: rgb(85, 85, 255);
+  --window-menubar: rgb(255, 255, 85);
+  --window-menubar-item-active: rgb(85, 85, 255);
+  --desktop-bg: rgb(85, 255, 85);
 }
 
 html, body, #app {
@@ -50,22 +57,23 @@ h1, h2, h3, h4, h5, h6, p, span, a {
 }
 
 p, span, button, a {
-  font-size: 11px;
+  font-size: 21px;
 }
 
-button, a {
-  min-width: 75px;
-  padding: 4px 0px;
-  background-color: rgb(192, 192, 192);
-  border-top: 1px groove rgb(255, 255, 255);
-  border-left: 1px groove rgb(255, 255, 255);
-  border-bottom: 2px ridge rgb(128, 128, 128);
-  border-right: 2px ridge rgb(128, 128, 128);
+button {
+  min-width: -webkit-max-content;
+  min-width: -moz-max-content;
+  min-width: max-content;
+  padding: 4px 8px;
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+  border-radius: 24px;
   outline: none;
 }
-button:active, a:active {
-  border: 1px solid rgb(140, 140, 140);
-  outline: 1px solid black;
+button:active {
+  background-color: black;
+  color: white;
 }
 
 input::-webkit-outer-spin-button,
@@ -79,15 +87,18 @@ input[type=number] {
 }
 
 input, select, textarea {
-  font-family: "Win98 MS Sans Serif";
-  font-size: 11px;
+  font-family: "fixedsys";
+  font-size: 21px;
+}
+
+input[type=text] {
+  -webkit-transform: scaleY(1.2);
+          transform: scaleY(1.2);
+  margin-bottom: 15px;
 }
 
 input[type=text], input[type=number], select, textarea {
-  border-top: 2px ridge rgb(128, 128, 128);
-  border-left: 2px ridge rgb(128, 128, 128);
-  border-bottom: 2px groove rgb(255, 255, 255);
-  border-right: 2px groove rgb(255, 255, 255);
+  border: 2px solid black;
 }
 input[type=text]:focus, input[type=number]:focus, select:focus, textarea:focus {
   outline: none;
@@ -143,7 +154,7 @@ code {
   border-bottom: 2px groove rgb(255, 255, 255);
   border-right: 2px groove rgb(255, 255, 255);
   font-family: "Consolas", monospace;
-  font-size: 11px;
+  font-size: 21px;
   color: black;
 }
 code div {
@@ -189,10 +200,10 @@ div.combobox-input-wrapper {
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
-  border-top: 2px ridge rgb(128, 128, 128);
-  border-left: 2px ridge rgb(128, 128, 128);
-  border-bottom: 2px groove rgb(255, 255, 255);
-  border-right: 2px groove rgb(255, 255, 255);
+  border: 2px solid black;
+  -webkit-transform: scaleY(1.2);
+          transform: scaleY(1.2);
+  margin-bottom: 15px;
 }
 div.combobox-input-wrapper select {
   -webkit-appearance: none;
@@ -200,7 +211,7 @@ div.combobox-input-wrapper select {
           appearance: none;
   border: none;
   outline: none;
-  padding: 2px 4px 2px 4px;
+  padding: 0px 4px 0px 4px;
 }
 div.combobox-input-wrapper select:focus {
   outline: none;
@@ -208,8 +219,8 @@ div.combobox-input-wrapper select:focus {
 div.combobox-input-wrapper button {
   min-width: 0px;
   width: 100%;
-  height: 15px;
-  padding: 0px;
+  height: 100%;
+  padding: 5px 3px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -223,19 +234,14 @@ div.combobox-input-wrapper button {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  border-top: 1px groove rgb(255, 255, 255);
-  border-left: 1px groove rgb(255, 255, 255);
-  border-bottom: 2px ridge rgb(128, 128, 128);
-  border-right: 2px ridge rgb(128, 128, 128);
+  border: unset;
+  border-radius: 0px;
 }
 div.combobox-input-wrapper button span.combobox-caret {
-  font-size: 13px;
+  font-size: 15px;
+  height: 100%;
 }
 div.combobox-input-wrapper button:active {
-  border-top: 2px ridge rgb(128, 128, 128);
-  border-left: 2px ridge rgb(128, 128, 128);
-  border-bottom: 1px groove rgb(255, 255, 255);
-  border-right: 1px groove rgb(255, 255, 255);
   outline: none;
 }
 
@@ -254,12 +260,22 @@ div.number-input-wrapper {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  border: 2px solid black;
+  -webkit-transform: scaleY(1.2);
+          transform: scaleY(1.2);
+  margin-bottom: 15px;
 }
 div.number-input-wrapper input {
   width: 100%;
+  border: unset;
+}
+div.number-input-wrapper input[type=text] {
+  -webkit-transform: scaleY(1);
+          transform: scaleY(1);
+  margin-bottom: 0px;
 }
 div.number-input-wrapper div.number-input-buttons {
   display: -webkit-box;
@@ -278,9 +294,9 @@ div.number-input-wrapper div.number-input-buttons {
 }
 div.number-input-wrapper div.number-input-buttons button {
   min-width: 0px;
-  width: 16px;
-  height: 8px;
-  padding: 0px;
+  width: 100%;
+  height: 50%;
+  padding: 0px 3px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -294,17 +310,11 @@ div.number-input-wrapper div.number-input-buttons button {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  font-size: 5px;
-  border-top: 1px groove rgb(255, 255, 255);
-  border-left: 1px groove rgb(255, 255, 255);
-  border-bottom: 2px ridge rgb(128, 128, 128);
-  border-right: 2px ridge rgb(128, 128, 128);
+  border: unset;
+  border-radius: 0px;
+  font-size: 12px;
 }
 div.number-input-wrapper div.number-input-buttons button:active {
-  border-top: 2px ridge rgb(128, 128, 128);
-  border-left: 2px ridge rgb(128, 128, 128);
-  border-bottom: 1px groove rgb(255, 255, 255);
-  border-right: 1px groove rgb(255, 255, 255);
   outline: none;
 }
 
@@ -312,19 +322,28 @@ div.desktop {
   position: relative;
   width: 100%;
   height: 100%;
-  background-color: rgb(0, 128, 128);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: var(--desktop-bg);
   overflow: hidden;
 }
 
 div.taskbar {
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
+  position: relative;
   width: 100%;
-  height: 26px;
-  padding: 2px 4px;
-  background-color: rgb(192, 192, 192);
-  border-top: 2px groove rgb(255, 255, 255);
+  height: 50px;
+  background-color: transparent;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -603,12 +622,11 @@ div.taskbar div.taskbar-items {
 }
 div.taskbar div.taskbar-items a {
   min-width: 0px;
-  width: 150px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
   height: 100%;
-  padding-top: 5px;
-  padding-left: 4px;
-  padding-right: 5px;
-  margin-right: 2px;
+  padding: 0px 3px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -626,20 +644,16 @@ div.taskbar div.taskbar-items a {
   color: black;
   cursor: default;
 }
-div.taskbar div.taskbar-items a.active, div.taskbar div.taskbar-items a:active {
-  background: repeating-conic-gradient(#ccc 0% 25%, rgb(246, 246, 246) 0% 50%) 50%/2px 2px;
-  border-top: 2px ridge rgb(128, 128, 128);
-  border-left: 2px ridge rgb(128, 128, 128);
-  border-bottom: 2px groove rgb(255, 255, 255);
-  border-right: 2px groove rgb(255, 255, 255);
+div.taskbar div.taskbar-items a:active {
+  background-color: white;
 }
 div.taskbar div.taskbar-items a {
-  background: none;
-  background-color: rgb(192, 192, 192);
-  border-top: 1px groove rgb(255, 255, 255);
-  border-left: 1px groove rgb(255, 255, 255);
-  border-bottom: 2px ridge rgb(128, 128, 128);
-  border-right: 2px ridge rgb(128, 128, 128);
+  background-color: transparent;
+}
+div.taskbar div.taskbar-items a img {
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 div.taskbar div.taskbar-items button.taskbar-item {
   min-width: 0px;
@@ -722,77 +736,17 @@ div.taskbar div.taskbar-tray div.taskbar-clock {
 }
 div.window {
   position: relative;
-  min-width: -webkit-fit-content;
-  min-width: -moz-fit-content;
-  min-width: fit-content;
-  min-height: -webkit-max-content;
-  min-height: -moz-max-content;
-  min-height: max-content;
-  max-width: -webkit-max-content;
-  max-width: -moz-max-content;
-  max-width: max-content;
-  max-height: calc(100% - 24px);
-  padding: 1px;
-  background-color: rgb(192, 192, 192);
-  border-top: 2px groove rgb(255, 255, 255);
-  border-left: 2px groove rgb(255, 255, 255);
-  border-bottom: 2px ridge rgb(128, 128, 128);
-  border-right: 2px ridge rgb(128, 128, 128);
+  width: 100%;
+  height: calc(100% - 50px);
+  padding: 0px;
+  background-color: white;
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
 }
 div.window div.window-titlebar {
   position: relative;
-  min-width: 190px;
   width: 100%;
-  height: 19px;
-  padding: 2px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  background-color: rgb(0, 0, 128);
-  color: white;
-}
-div.window div.window-titlebar div.window-titlebar-content {
-  position: relative;
-  width: 50%;
-  height: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-div.window div.window-titlebar div.window-titlebar-content:first-of-type {
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
-}
-div.window div.window-titlebar div.window-titlebar-content:first-of-type h6 {
-  width: 100%;
-}
-div.window div.window-titlebar div.window-titlebar-content:last-of-type {
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-}
-div.window div.window-titlebar div.window-titlebar-content:last-of-type button.titlebar-control {
-  min-width: 0px;
-  width: 17px;
-  height: 15px;
+  height: 25px;
   padding: 0px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -807,17 +761,14 @@ div.window div.window-titlebar div.window-titlebar-content:last-of-type button.t
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  background-color: var(--window-titlebar-active);
+  border-bottom: 2px solid black;
+  color: white;
 }
-div.window div.window-titlebar div.window-titlebar-content:last-of-type button.titlebar-control h6 {
-  font-size: 10px;
-  margin-top: 1px;
-  margin-left: 1px;
-}
-div.window div.window-menubar {
+div.window div.window-titlebar div.window-titlebar-content {
   position: relative;
-  width: 100%;
-  height: 20px;
-  padding: 1px;
+  width: 33.33%;
+  height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -828,8 +779,94 @@ div.window div.window-menubar {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  background-color: rgb(192, 192, 192);
-  border-bottom: 2px groove rgb(230, 230, 230);
+}
+div.window div.window-titlebar div.window-titlebar-content.left button.titlebar-control {
+  border-right: 2px solid black;
+  overflow: hidden;
+}
+div.window div.window-titlebar div.window-titlebar-content.left button.titlebar-control h6 {
+  margin-top: -4px;
+  font-size: 28px;
+  font-weight: bold;
+  line-height: 10px;
+}
+div.window div.window-titlebar div.window-titlebar-content.left {
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+div.window div.window-titlebar div.window-titlebar-content.center {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+div.window div.window-titlebar div.window-titlebar-content.center h6 {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: 100%;
+  line-height: 20px;
+  font-size: 23px;
+  background-color: black;
+  color: white;
+  font-weight: normal;
+}
+div.window div.window-titlebar div.window-titlebar-content.right {
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+div.window div.window-titlebar div.window-titlebar-content.right button.titlebar-control {
+  border-left: 2px solid black;
+  overflow: hidden;
+}
+div.window div.window-titlebar div.window-titlebar-content.right button.titlebar-control h6 {
+  font-size: 40px;
+  font-weight: normal;
+}
+div.window div.window-titlebar div.window-titlebar-content button.titlebar-control {
+  min-width: 0px;
+  width: 24px;
+  height: 100%;
+  padding: 0px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border: unset;
+  border-radius: 0px;
+}
+div.window div.window-titlebar div.window-titlebar-content button.titlebar-control h6 {
+  font-size: 10px;
+  margin-top: 1px;
+  margin-left: 1px;
+}
+div.window div.window-menubar {
+  position: relative;
+  width: 100%;
+  height: 25px;
+  padding: 0px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: var(--window-menubar);
+  border-bottom: 2px solid black;
 }
 div.window div.window-menubar div.menubar-item {
   position: relative;
@@ -842,13 +879,13 @@ div.window div.window-menubar div.menubar-item:hover > div.menubar-dropdown {
   display: flex;
 }
 div.window div.window-menubar div.menubar-item:hover > div.menubar-item-button {
-  background-color: rgb(0, 0, 128);
+  background-color: var(--window-menubar-item-active);
   color: white;
   cursor: default;
 }
 div.window div.window-menubar div.menubar-item div.menubar-item-button {
   height: 100%;
-  padding: 2px 6px;
+  padding: 2px 10px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -863,6 +900,9 @@ div.window div.window-menubar div.menubar-item div.menubar-item-button {
       -ms-flex-pack: center;
           justify-content: center;
 }
+div.window div.window-menubar div.menubar-item div.menubar-item-button span {
+  font-size: 21px;
+}
 div.window div.window-menubar div.menubar-item div.menubar-dropdown {
   position: absolute;
   top: 100%;
@@ -870,10 +910,10 @@ div.window div.window-menubar div.menubar-item div.menubar-dropdown {
   min-width: -webkit-max-content;
   min-width: -moz-max-content;
   min-width: max-content;
-  background-color: rgb(192, 192, 192);
-  border: 2px groove rgb(255, 255, 255);
-  border-bottom: 2px ridge rgb(128, 128, 128);
-  border-right: 2px ridge rgb(128, 128, 128);
+  background-color: var(--window-menubar);
+  border-left: 2px solid black;
+  border-bottom: 2px solid black;
+  border-right: 2px solid black;
   display: none;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
@@ -903,28 +943,21 @@ div.window div.window-menubar div.menubar-item div.menubar-dropdown div.dropdown
   margin: 0px;
 }
 div.window div.window-menubar div.menubar-item div.menubar-dropdown div.dropdown-item:hover {
-  background-color: rgb(0, 0, 128);
+  background-color: var(--window-menubar-item-active);
   color: white;
   cursor: default;
 }
 div.window div.window-menubar + div.window-content {
-  height: calc(100% - 41px);
+  height: calc(100% - 50px);
 }
 div.window div.window-content {
   position: relative;
-  min-width: -webkit-fit-content;
-  min-width: -moz-fit-content;
-  min-width: fit-content;
-  min-height: calc(100% + 61px);
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-  height: calc(100% - 21px);
+  width: 100%;
+  height: calc(100% - 25px);
   padding: 5px;
-  background-color: rgb(192, 192, 192);
+  background-color: white;
 }
 div.window div.window-content div.action-buttons {
-  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -955,22 +988,23 @@ div.panel-group-box {
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
-  border: 2px groove rgb(230, 230, 230);
+  border: 1px solid black;
   margin-top: 10px;
 }
 div.panel-group-box span.panel-group-box-title {
   position: absolute;
   top: -6px;
   left: 10px;
-  background-color: rgb(192, 192, 192);
-  line-height: 10px;
+  background-color: white;
+  font-size: 19px;
+  line-height: 12px;
 }
 div.panel-group-box div.panel-group-box-content {
   position: relative;
   width: 100%;
   height: 100%;
-  padding: 5px;
-  padding-top: 10px;
+  padding: 12.5px;
+  padding-top: 25px;
 }
 
 .valid.modified:not([type=checkbox]) {

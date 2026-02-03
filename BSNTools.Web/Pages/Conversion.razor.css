@@ -1,8 +1,6 @@
 div.row-container {
   width: 100%;
-  height: -webkit-max-content;
-  height: -moz-max-content;
-  height: max-content;
+  height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -18,11 +16,9 @@ div.row-container {
           justify-content: center;
   padding: 10px;
 }
-div.row-container div {
-  width: 200px;
-  height: -webkit-max-content;
-  height: -moz-max-content;
-  height: max-content;
+div.row-container div.row {
+  width: 500px;
+  height: auto;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -30,6 +26,28 @@ div.row-container div {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+div.action-buttons {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+}
+
+div.units-container {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;

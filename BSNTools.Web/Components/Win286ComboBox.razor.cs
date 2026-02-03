@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace BSNTools.Web.Components
 {
-    public partial class NT4ComboBox<TItem> : ComponentBase
+    public partial class Win286ComboBox<TItem> : ComponentBase
     {
 
         [Parameter]
@@ -60,10 +60,5 @@ namespace BSNTools.Web.Components
             }
         }
 
-
-        public NT4ComboBox()
-        {
-
-        }
     }
 }
