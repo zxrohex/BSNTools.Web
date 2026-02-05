@@ -1,167 +1,189 @@
 ﻿@page "/ip"
 @inject MessageBoxService MessageBox
 @inject InputBoxService InputBox
+@inject CustomDialogService CustomDialog
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
 
 
 <PageTitle>IP-Tools</PageTitle>
 
-<Window Title="IP-Tools">
-    <MenuBar>
-        <WindowMenuBar>
+@if (ipNetwork != null)
+{
+    <Window Title="IP-Tools">
+        <MenuBar>
+            <WindowMenuBar>
 
-            <MenuBarItem Title="Aktionen">
-                <DropdownItem OnClick="OnSubnettingClick">
-                    <span>Subnetze berechnen</span>
-                </DropdownItem>
-            </MenuBarItem>
+                <MenuBarItem Title="Aktionen">
+                    <DropdownItem OnClick="OnCalculateClick">
+                        <span>Neue IP-Adresse berechnen</span>
+                    </DropdownItem>
 
-            <MenuBarItem Title="Tools">
-                <DropdownItem>
-                    <span>...</span>
-                </DropdownItem>
-            </MenuBarItem>
+                    <DropdownItem OnClick="OnSubnettingClick">
+                        <span>Subnetze berechnen</span>
+                    </DropdownItem>
+                </MenuBarItem>
 
-        </WindowMenuBar>
-    </MenuBar>
+                <MenuBarItem Title="Tools">
+                    <DropdownItem OnClick="OnTestClick">
+                        <span>Infos</span>
+                    </DropdownItem>
+                </MenuBarItem>
 
-    <Content>
-        <div class="content-container">
+            </WindowMenuBar>
+        </MenuBar>
 
-            <PanelBox Title="IP-Adresse/CIDR">
-                <input type="text" @bind-value="ipAddress">
+        <Content>
+            <div class="content-container">
+                <div class="terminal-container">
 
-                <button @onclick="OnCalculateClick">
-                    Berechnen
-                </button>
-            </PanelBox>
+                    <div class="terminal-text">
+                        <p>IP-Konfiguration</p>
 
-            <div class="panels-container">
-                @if (ipNetwork != null)
-                {
-                    @if (!string.IsNullOrEmpty(CIDR))
-                    {
-                        subnets = ipNetwork.Subnet(Convert.ToByte(CIDR));
+                        <p class="indented-output">
+                            <span>
+                                @("Adresse".PadRight(25, '.')) @ipNetwork.ToString()
+                            </span>
 
+                            <span>
+                                @("Subnetzmaske".PadRight(25, '.')) @ipNetwork.Netmask.ToString()
+                            </span>
 
-                        <PanelBox Title="Subnetz" Attributes="@(new Styling() { Width = "500px", Height = "550px" })">
-                            <div class="subnet-panel-inner">
-                                <div class="subnet-selector-inner">
-                                    <Win286ComboBox Items="subnets.ToList()" @bind-SelectedItem="selected"></Win286ComboBox>
-                                </div>
+                            <span>
+                                @("Netzadresse".PadRight(25, '.')) @ipNetwork.Network.ToString()
+                            </span>
 
-                                @if (selected != null)
-                                {
-                                    <code style="margin-top: 10px;">
-                                        <div>
-                                            <strong>Ausgewähltes Subnetz:</strong>
-                                        </div>
-                                        <div><strong>Adresse: </strong> @selected.ToString()</div>
-                                        <div><strong>Subnetzmaske: </strong> @selected.Netmask.ToString()</div>
-                                        <div><strong>Netzwerkadresse: </strong> @selected.Network.ToString()</div>
-                                        <div><strong>Broadcastadresse: </strong> @selected.Broadcast.ToString()</div>
-                                        <div><strong>Erste Adresse: </strong> @selected.First.ToString()</div>
-                                        <div><strong>Erste nutzbare Adresse: </strong> @selected.FirstUsable.ToString()</div>
-                                        <div><strong>Letzte Adresse: </strong> @selected.Last.ToString()</div>
-                                        <div><strong>Letzte nutzbare Adresse: </strong> @selected.LastUsable.ToString()</div>
-                                        <div><strong>Insgesamt / Nutzbar: </strong> @selected.Total.ToString() / @selected.Usable.ToString()</div>
+                            <span>
+                                @(ipNetwork.Broadcast != null ? $"Broadcastadresse".PadRight(25, '.') + $" {ipNetwork.Broadcast}" : "Kein Broadcast (Host-Adresse)")
+                            </span>
 
-                                    </code>
+                            <span>
+                                @("Erste Adresse".PadRight(25, '.')) @ipNetwork.First.ToString()
+                            </span>
 
-                                }
-                            </div>
-                        </PanelBox>
-                    }
+                            <span>
+                                @("Erste nutzbare Adresse".PadRight(25, '.')) @ipNetwork.FirstUsable.ToString()
+                            </span>
 
+                            <span>
+                                @("Letzte Adresse".PadRight(25, '.')) @ipNetwork.Last.ToString()
+                            </span>
 
-                    <PanelBox Title="Hauptnetz" Attributes="@(new Styling() { Width = "500px", Height = "550px" })">
+                            <span>
+                                @("Letzte nutzbare Adresse".PadRight(25, '.')) @ipNetwork.LastUsable.ToString()
+                            </span>
 
-                        <code>
-
-                            <div>
-                                <strong>Adresse: </strong> @ipNetwork.ToString()
-
-                            </div>
-
-                            <div>
-                                <strong>Subnetzmaske: </strong> @ipNetwork.Netmask.ToString()
-
-                            </div>
-
-                            <div>
-                                <strong>Netzwerkadresse: </strong> @ipNetwork.Network.ToString()
-
-                            </div>
-
-                            <div>
-                                <strong>Broadcastadresse: </strong> @ipNetwork.Broadcast.ToString()
-
-                            </div>
-
-                            <div>
-                                <strong>Erste Adresse: </strong> @ipNetwork.First.ToString()
-
-                            </div>
-
-                            <div>
-                                <strong>Erste nutzbare Adresse: </strong> @ipNetwork.FirstUsable.ToString()
-
-                            </div>
-
-                            <div>
-                                <strong>Letzte Adresse: </strong> @ipNetwork.Last.ToString()
-
-                            </div>
-
-                            <div>
-                                <strong>Letzte nutzbare Adresse: </strong> @ipNetwork.LastUsable.ToString()
-
-                            </div>
-
-
-                            <div>
-                                <strong>Insgesamt / Nutzbar: </strong> @ipNetwork.Total.ToString() / @ipNetwork.Usable.ToString()
-
-                            </div>
+                            <span>
+                                @("Insgesamt / Nutzbar".PadRight(25, '.')) @ipNetwork.Total.ToString() / @ipNetwork.Usable.ToString()
+                            </span>
 
                             @if (!string.IsNullOrEmpty(CIDR))
                             {
                                 subnets = ipNetwork.Subnet(Convert.ToByte(CIDR));
-                                 
-                                <div style="margin-top: 10px; height: max-content; overflow-y: hidden;">
-                                    <strong>@subnets.Count Subnetze:</strong>
 
-                                    <div style="height: fit-content; overflow-y: hidden;">
-                                        @foreach (IPNetwork2 subnet in subnets.ToArray())
-                                        {
-                                            <p>@subnet.First.ToString()</p>
-                                        }
-                                    </div>
-                                </div>
+
+                                <span>
+                                    @("Subnetze".PadRight(25, '.')) @subnets.Count
+                                </span>
+
+                                @foreach (IPNetwork2 subnet in subnets.ToArray())
+                                {
+                                    <span>@subnet.First.ToString().PadLeft(38, '.')</span>
+                                }
+
                             }
-                        </code>
-                    </PanelBox>
+                        </p>
 
+
+                    </div>
+
+                </div>
+            </div>
+        </Content>
+    </Window>
+
+    @if (!string.IsNullOrEmpty(CIDR))
+    {
+
+        <Window Title="Subnetz">
+            <Content>
+
+                @{
+                    subnets = ipNetwork.Subnet(Convert.ToByte(CIDR));
+
+                    var subnetList = subnets.ToList();
                 }
-            </div>
 
-            <div class="action-buttons">
-                <button @onclick="OnCalculateClick">
-                    Berechnen
-                </button>
+                <div class="content-container">
+                    <div class="terminal-container">
 
-                <button @onclick="OnSubnettingClick">
-                    Subnetting
-                </button>
-            </div>
-        </div>
+                        <div class="terminal-text">
+                            @foreach (var subnet in subnetList)
+                            {
+                                <p>Subnetz-Konfiguration</p>
 
+                                <p class="indented-output">
+                                    <span>
+                                        @("Subnetz".PadRight(25, '.')) @(subnetList.IndexOf(subnet) + 1)
+                                    </span>
 
+                                    <span>
+                                        @("Adresse".PadRight(25, '.')) @subnet.ToString()
+                                    </span>
 
+                                    <span>
+                                        @("Subnetzmaske".PadRight(25, '.')) @subnet.Netmask.ToString()
+                                    </span>
 
-    </Content>
-</Window>
+                                    <span>
+                                        @("Netzadresse".PadRight(25, '.')) @subnet.Network.ToString()
+                                    </span>
+
+                                    <span>
+                                        @(subnet.Broadcast != null ? $"Broadcastadresse".PadRight(25, '.') + $" {subnet.Broadcast}" : "Kein Broadcast (Host-Adresse)")
+                                    </span>
+
+                                    <span>
+                                        @("Erste Adresse".PadRight(25, '.')) @subnet.First.ToString()
+                                    </span>
+
+                                    <span>
+                                        @("Erste nutzbare Adresse".PadRight(25, '.')) @subnet.FirstUsable.ToString()
+                                    </span>
+
+                                    <span>
+                                        @("Letzte Adresse".PadRight(25, '.')) @subnet.Last.ToString()
+                                    </span>
+
+                                    <span>
+                                        @("Letzte nutzbare Adresse".PadRight(25, '.')) @subnet.LastUsable.ToString()
+                                    </span>
+
+                                    <span>
+                                        @("Insgesamt / Nutzbar".PadRight(25, '.')) @subnet.Total.ToString() / @subnet.Usable.ToString()
+                                    </span>
+                                </p>
+
+                            }
+
+                        </div>
+
+                    </div>
+                </div>
+            </Content>
+        </Window>
+
+    }
+}
+else
+{
+    <Window Title="IP-Tools">
+        <Content>
+
+        </Content>
+    </Window>
+}
+
 
 @code {
     string ipAddress = "";
@@ -174,19 +196,34 @@
 
     byte cidrParsed;
 
+    async Task OnTestClick()
+    {
+        string myValue = "";
+
+        var result = await CustomDialog.ShowAsync<string>("Test", (@<div>
+    <p>Erste Adresse: </p>
+    <p>@string.Join(".", ipNetwork.First.GetAddressBytes().Select(i => Convert.ToString(i, 2).PadLeft(8, '0')))</p>
+    <p>Subnetzmaske: </p>
+    <p>@string.Join(".", ipNetwork.Netmask.GetAddressBytes().Select(i => Convert.ToString(i, 2).PadLeft(8, '0')))</p>
+    <p>Netzadresse: </p>
+    <p>@string.Join(".", ipNetwork.Network.GetAddressBytes().Select(i => Convert.ToString(i, 2).PadLeft(8, '0')))</p>
+    <button @onclick="() => CustomDialog.Close(null)">OK</button>
+</div>
+    ), width: 500);
+    }
 
     private async Task OnCalculateClick()
     {
-        await InvokeAsync(() =>
+        string addr = await InputBox.ShowAsync("IP-Adresse eingeben", "Gebe die IP-Adresse ein:");
+
+        if (!string.IsNullOrEmpty(addr))
         {
             NavigationManager.NavigateTo(NavigationManager.GetUriWithQueryParameters(new Dictionary<string, object?>
             {
-                ["ip"] = ipAddress,
+                ["ip"] = addr,
                 ["cidr"] = null
             }));
-
-
-        });
+        }
     }
 
     private async Task OnSubnettingClick()
@@ -199,11 +236,11 @@
             {
                 NavigationManager.NavigateTo(NavigationManager.GetUriWithQueryParameters(new Dictionary<string, object?>
                 {
-                    ["ip"] = ipAddress,
+                    ["ip"] = IPAddress,
                     ["cidr"] = cidr
                 }));
 
-                StateHasChanged();
+
             });
         }
 

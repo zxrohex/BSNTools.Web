@@ -6,8 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <OverrideHtmlAssetPlaceholders>true</OverrideHtmlAssetPlaceholders>
     <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
-    <AssemblyVersion>0.0.0.91</AssemblyVersion>
-    <FileVersion>0.0.0.91</FileVersion>
+    <AssemblyVersion>0.0.0.101</AssemblyVersion>
+    <FileVersion>0.0.0.101</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Core\Tools\" />
     <Folder Include="Layout\Container\" />
     <Folder Include="wwwroot\js\" />
   </ItemGroup>

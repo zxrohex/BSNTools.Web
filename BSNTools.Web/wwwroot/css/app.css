@@ -148,12 +148,6 @@ code {
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
-  padding: 7px;
-  border-top: 2px ridge rgb(128, 128, 128);
-  border-left: 2px ridge rgb(128, 128, 128);
-  border-bottom: 2px groove rgb(255, 255, 255);
-  border-right: 2px groove rgb(255, 255, 255);
-  font-family: "Consolas", monospace;
   font-size: 21px;
   color: black;
 }
@@ -337,6 +331,24 @@ div.desktop {
           justify-content: center;
   background-color: var(--desktop-bg);
   overflow: hidden;
+}
+div.desktop div.desktop-window-layout {
+  position: relative;
+  width: 100%;
+  height: calc(100% - 50px);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 div.taskbar {
@@ -737,11 +749,14 @@ div.taskbar div.taskbar-tray div.taskbar-clock {
 div.window {
   position: relative;
   width: 100%;
-  height: calc(100% - 50px);
+  height: 100%;
   padding: 0px;
   background-color: white;
   border-top: 2px solid black;
   border-bottom: 2px solid black;
+}
+div.window:nth-child(2) {
+  border-left: 2px solid black;
 }
 div.window div.window-titlebar {
   position: relative;
@@ -767,7 +782,6 @@ div.window div.window-titlebar {
 }
 div.window div.window-titlebar div.window-titlebar-content {
   position: relative;
-  width: 33.33%;
   height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -796,14 +810,15 @@ div.window div.window-titlebar div.window-titlebar-content.left {
           justify-content: flex-start;
 }
 div.window div.window-titlebar div.window-titlebar-content.center {
+  width: 50%;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
 }
 div.window div.window-titlebar div.window-titlebar-content.center h6 {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
   height: 100%;
   line-height: 20px;
   font-size: 23px;
@@ -817,12 +832,17 @@ div.window div.window-titlebar div.window-titlebar-content.right {
           justify-content: flex-end;
 }
 div.window div.window-titlebar div.window-titlebar-content.right button.titlebar-control {
+  position: relative;
+  right: -1px;
   border-left: 2px solid black;
   overflow: hidden;
 }
 div.window div.window-titlebar div.window-titlebar-content.right button.titlebar-control h6 {
   font-size: 40px;
   font-weight: normal;
+}
+div.window div.window-titlebar div.window-titlebar-content.left, div.window div.window-titlebar div.window-titlebar-content.right {
+  width: 25%;
 }
 div.window div.window-titlebar div.window-titlebar-content button.titlebar-control {
   min-width: 0px;
@@ -954,7 +974,6 @@ div.window div.window-content {
   position: relative;
   width: 100%;
   height: calc(100% - 25px);
-  padding: 5px;
   background-color: white;
 }
 div.window div.window-content div.action-buttons {

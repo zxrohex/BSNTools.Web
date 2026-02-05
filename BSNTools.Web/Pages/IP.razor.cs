@@ -52,6 +52,19 @@ namespace BSNTools.Web.Pages
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
+            if (string.IsNullOrEmpty(IPAddress))
+            {
+                string addr = await InputBox.ShowAsync("Eingabe", "Gebe die IP-Adresse ein:");
+
+                if (!string.IsNullOrEmpty(addr))
+                {
+                    NavigationManager.NavigateTo(NavigationManager.GetUriWithQueryParameters(new Dictionary<string, object?>
+                    {
+                        ["ip"] = addr
+                    }));
+                }
+            }
+
             if (subnets != null)
             {
                 LogService.Log(subnets.Count.ToString());

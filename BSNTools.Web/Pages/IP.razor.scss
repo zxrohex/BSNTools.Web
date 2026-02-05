@@ -1,10 +1,41 @@
 ﻿code {
     display: block;
-
     width: 100%;
     height: 100%;
-
     overflow-y: auto;
+}
+
+div.terminal-text {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar-thumb {
+        background: white;
+        border-left: 2px solid black;
+        border-bottom: 2px solid black;
+        border-top: 2px solid black;
+        
+    }
+
+    &::-webkit-scrollbar {
+        width: 23px;
+        height: 8px;
+        border-left: 2px solid black;
+        background-color: rgb(255, 85, 85); /* or add it to the track */
+    }
+
+    p.indented-output {
+
+
+        span {
+            display: block;
+            margin-left: 20px;
+
+            &::after {
+            }
+        }
+    }
 }
 
 div.content-container {
@@ -18,23 +49,15 @@ div.content-container {
 
 
 
-    div.panels-container {
+    div.terminal-container {
         position: relative;
         width: 100%;
-        height: max-content;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        margin-top: 25px;
-        gap: 25px;
+        height: 100%;
 
         div.subnet-panel-inner {
             height: calc(100% - 58px);
 
             div.subnet-selector-inner {
-
-
                 display: flex;
                 flex-direction: row;
                 align-items: center;
@@ -48,4 +71,8 @@ div.content-container {
         bottom: 5px;
         right: 5px;
     }
+}
+
+div.visualizer-grid {
+
 }

@@ -5,6 +5,27 @@ code {
   overflow-y: auto;
 }
 
+div.terminal-text {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+div.terminal-text::-webkit-scrollbar-thumb {
+  background: white;
+  border-left: 2px solid black;
+  border-bottom: 2px solid black;
+  border-top: 2px solid black;
+}
+div.terminal-text::-webkit-scrollbar {
+  width: 23px;
+  height: 8px;
+  border-left: 2px solid black;
+  background-color: rgb(255, 85, 85); /* or add it to the track */
+}
+div.terminal-text p.indented-output span {
+  display: block;
+  margin-left: 20px;
+}
 div.content-container {
   position: relative;
   width: 100%;
@@ -23,32 +44,15 @@ div.content-container {
       -ms-flex-pack: center;
           justify-content: center;
 }
-div.content-container div.panels-container {
+div.content-container div.terminal-container {
   position: relative;
   width: 100%;
-  height: -webkit-max-content;
-  height: -moz-max-content;
-  height: max-content;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  margin-top: 25px;
-  gap: 25px;
+  height: 100%;
 }
-div.content-container div.panels-container div.subnet-panel-inner {
+div.content-container div.terminal-container div.subnet-panel-inner {
   height: calc(100% - 58px);
 }
-div.content-container div.panels-container div.subnet-panel-inner div.subnet-selector-inner {
+div.content-container div.terminal-container div.subnet-panel-inner div.subnet-selector-inner {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
