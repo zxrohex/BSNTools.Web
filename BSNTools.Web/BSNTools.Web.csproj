@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
     <TargetFramework>net11.0</TargetFramework>
@@ -6,8 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <OverrideHtmlAssetPlaceholders>true</OverrideHtmlAssetPlaceholders>
     <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
-    <AssemblyVersion>0.0.0.110</AssemblyVersion>
-    <FileVersion>0.0.0.110</FileVersion>
+    <AssemblyVersion>0.0.0.111</AssemblyVersion>
+    <FileVersion>0.0.0.111</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
