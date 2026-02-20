@@ -1,0 +1,44 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  push:
+    branches: [ "exp-pwa-standalone" ]
+  pull_request:
+    branches: [ "exp-pwa-standalone" ]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 11.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+    - name: Publish
+      run: dotnet publish ./BSNTools.Web/BSNTools.Web.csproj -c Debug -o debug --nologo
+    # changes the base-tag in index.html from '/' to 'BSNTools.Web' to match GitHub Pages repository subdirectory
+    - name: Change base-tag in index.html from / to BSNTools.Web
+      run: sed -i 's/<base href="\/" \/>/<base href="\/BSNTools.Web\/" \/>/g' debug/wwwroot/index.html
+    # add .nojekyll file to tell GitHub pages to not treat this as a Jekyll project. (Allow files and folders starting with an underscore)
+    - name: Add .nojekyll file
+      run: touch debug/wwwroot/.nojekyll
+    - name: Commit wwwroot to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4.7.2
+      with:
+        BRANCH: gh-pages
+        FOLDER: debug/wwwroot
