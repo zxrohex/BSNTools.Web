@@ -1,6 +1,15 @@
 ﻿# Changelog
 
-All notable changes to this branch (`exp-pwa-standalone`) will be documented in this file.
+Dieser Changelog dokumentiert alle wesentlichen Änderungen an diesem Branch (`exp-pwa-standalone`) bis zum Commit c085cfb.
+
+Aufgrund von Vorbereitungen zur Veröffentlichung und Optimierungen für eine öffentlichen Testinstanz wird dieser Changelog erst ab
+Abschluss der Arbeiten wieder aktualisiert.
+
+Mithilfe von KI aus Git-Logs generiert.
+
+---
+
+All notable changes to this branch (`exp-pwa-standalone`) until c085cfb are documented in this file.
 
 ## Unreleased (exp-pwa-standalone)
 
