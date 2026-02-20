@@ -1,4 +1,5 @@
 ﻿@page "/about"
+@inject AppConfig AppConfig
 
 <PageTitle>Über BSN-Tools</PageTitle>
 
@@ -21,6 +22,17 @@
             </p>
 
             <p>Version @version.Major.@version.Minor.@version.Build Build @version.Revision</p>
+
+            @if (AppConfig.IsAzureTestInstance)
+            {
+                <p>
+                    <strong>Diese Version ist eine Entwicklungs-Testinstanz, die auf Azure bereitgestellt wurde. <br />Sie ist und könnte instabil sein und Fehler enthalten, und entspricht nicht der finalen Version.</strong>
+                </p>
+
+                <p>
+                    Azure-Testinstanz: @AppConfig.GetAzureTestInstanceDeployment()
+                </p>
+            }
 
             <a href="https://github.com/zxrohex/BSNTools.Web" target="_blank">GitHub Repository</a>
 
