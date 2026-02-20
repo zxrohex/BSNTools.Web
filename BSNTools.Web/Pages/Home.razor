@@ -80,7 +80,12 @@
 </Window>
 
 @code {
-    List<string> docs = new List<string>();
+    List<string> docs = new List<string>() {
+     "README.md",
+     "CHANGELOG.md",
+     "NOTICE.md",
+     "HILFE.md"
+    };
 
     private async Task Navigate(string url)
     {
@@ -126,6 +131,6 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        docs = await HttpClient.GetFromJsonAsync<List<string>>("api/docs/GetAllDocs");
+       
     }
 }

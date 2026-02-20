@@ -22,9 +22,26 @@ namespace BSNTools.Web.Pages
         {
             if (!string.IsNullOrEmpty(FileName))
             {
+                if (FileName.Contains("..") || FileName.Contains("/") || FileName.Contains("\\"))
+                {
+                    FileContent = $"Invalid file name: '{FileName}'";
+
+                    lastException = new ArgumentException($"Illegaler Dateiname: '{FileName}'");
+
+                    return;
+                }
+                else if (!FileName.EndsWith(".md"))
+                {
+                    FileContent = $"Invalid file extension: '{FileName}'";
+
+                    lastException = new ArgumentException($"Illegale Dateiendung: '{FileName}'");
+
+                    return;
+                }
+
                 try
                 {
-                    var response = await HttpClient.GetAsync($"api/docs/GetDoc/{FileName}");
+                    var response = await HttpClient.GetAsync($"assets/docs/{FileName}");
                   
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {

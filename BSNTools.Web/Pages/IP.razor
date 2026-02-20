@@ -77,6 +77,8 @@
                                 @("Insgesamt / Nutzbar".PadRight(25, '.')) @ipNetwork.Total.ToString() / @ipNetwork.Usable.ToString()
                             </span>
 
+                            
+
                             @if (!string.IsNullOrEmpty(CIDR))
                             {
                                 subnets = ipNetwork.Subnet(Convert.ToByte(CIDR));
@@ -92,6 +94,53 @@
                                 }
 
                             }
+                        </p>
+
+                        <p>Visuelle Darstellungen</p>
+
+                        <p class="indented-output">
+                            <span>
+                                @("Binärformat".PadRight(25, '.'))
+                            </span>
+                            <span>
+                                @string.Join(".", ipNetwork.First.GetAddressBytes().Select(i => Convert.ToString(i, 2).PadLeft(8, '0')))
+                            </span>
+                            <span>
+                                @string.Join(".", ipNetwork.Netmask.GetAddressBytes().Select(i => Convert.ToString(i, 2).PadLeft(8, '0')))
+                            </span>
+                            <span>
+                                @string.Join(".", ipNetwork.Network.GetAddressBytes().Select(i => Convert.ToString(i, 2).PadLeft(8, '0')))
+                            </span>
+                        </p>
+
+                        <p>
+                            Visuelle Darstellung der Bitbereiche (gruen = Netzbits, gelb = Subnetzbits, blau = Hostbits)
+                        </p>
+
+                        <p class="indented-output">
+                            <p class="address-visualization-output">
+                                @("Netzadresse")
+                                
+                                <span class="address-visualization">
+                                    <span class="address-visualization-part netbits">@ipNetwork.Network.ToBinaryString().Substring(0, ipNetwork.Cidr + 2)</span><span class="address-visualization-part hostbits">@ipNetwork.Network.ToBinaryString().Substring(ipNetwork.Cidr + 2)</span>
+                                </span>
+                            </p>
+
+                            <p class="address-visualization-output">
+                                @("Subnetzmaske")
+                                <span class="address-visualization">
+                                    @if (!string.IsNullOrEmpty(CIDR))
+                                    {
+                                        
+
+
+                                    }
+                                    else
+                                    {
+                                        <span class="address-visualization-part netbits">@ipNetwork.Netmask.ToBinaryString().Substring(0, ipNetwork.Cidr + 2)</span><span class="address-visualization-part hostbits">@ipNetwork.Netmask.ToBinaryString().Substring(ipNetwork.Cidr + 2)</span>
+                                    }
+                                </span>
+                            </p>
                         </p>
 
 

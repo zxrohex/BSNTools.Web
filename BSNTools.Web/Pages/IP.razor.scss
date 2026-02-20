@@ -10,12 +10,16 @@ div.terminal-text {
     height: 100%;
     overflow-y: auto;
 
+
+    span, p {
+        user-select: text;
+    }
+
     &::-webkit-scrollbar-thumb {
         background: white;
         border-left: 2px solid black;
         border-bottom: 2px solid black;
         border-top: 2px solid black;
-        
     }
 
     &::-webkit-scrollbar {
@@ -25,12 +29,18 @@ div.terminal-text {
         background-color: rgb(255, 85, 85); /* or add it to the track */
     }
 
+
+    p:not(:first-of-type):not(.indented-output):not(.address-visualization-output) {
+        margin-top: 25px;
+    }
+
     p.indented-output {
 
 
-        span {
+        span, p {
             display: block;
             margin-left: 20px;
+
 
             &::after {
             }
@@ -53,6 +63,8 @@ div.content-container {
         position: relative;
         width: 100%;
         height: 100%;
+        background-color: black;
+        color: white;
 
         div.subnet-panel-inner {
             height: calc(100% - 58px);
@@ -74,5 +86,31 @@ div.content-container {
 }
 
 div.visualizer-grid {
+}
 
+
+p.address-visualization-output {
+
+
+
+    span.address-visualization {
+        width: fit-content;
+
+        span.address-visualization-part {
+            display: inline;
+            margin-left: 0px;
+
+            &.netbits {
+                background-color: rgb(63, 175, 70);
+            }
+
+            &.hostbits {
+                background-color: rgb(114, 159, 207);
+            }
+
+            &.subnetbits {
+                background-color: rgb(232, 242, 161);
+            }
+        }
+    }
 }
