@@ -92,42 +92,6 @@
         NavigationManager.NavigateTo(url);
     }
 
-    private async Task OnTestClick()
-    {
-        // Der Code "wartet" hier, bis der Nutzer geklickt hat
-        // Einfache Verwendung
-        var name = await InputBox.ShowAsync("Eingabe", "Bitte Namen eingeben:");
-        if (name != null)
-        {
-            await MessageBox.ShowAsync("test", name);
-        }
-        else
-        {
-            // Benutzer hat abgebrochen
-        }
-
-        // Mit Standardwert
-        var result = await InputBox.ShowAsync("Titel", "Nachricht", "Standardwert");
-
-        await MessageBox.ShowAsync("test", result);
-    }
-
-    async Task test2()
-    {
-        // Beliebiger Inhalt mit beliebigem Rueckgabewert
-        string myValue = "";
-
-        var result = await CustomDialog.ShowAsync<string>("Mein Dialog", (@<div>
-                <p>Beliebiger Inhalt hier</p>
-                <input @bind="myValue" />
-                <button @onclick="() => CustomDialog.Close(myValue)">Speichern</button>
-                <button @onclick="() => CustomDialog.Close(null)">Abbrechen</button>
-            </div>
-    ), width: 500);
-
-        await MessageBox.ShowAsync("test", result);
-    }
-
 
     protected override async Task OnParametersSetAsync()
     {

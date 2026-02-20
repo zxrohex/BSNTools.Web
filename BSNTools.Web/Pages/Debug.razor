@@ -5,12 +5,12 @@
 <Window Title="Debug">
 
     <Content>
-        <div>
+        <p>
             @foreach (string i in LogService.PrintAllLogs())
             {
                 <span>@i</span>
             }
-        </div>
+        </p>
     </Content>
 </Window>
 

@@ -100,5 +100,6 @@ p.address-visualization-output span.address-visualization span.address-visualiza
   background-color: rgb(114, 159, 207);
 }
 p.address-visualization-output span.address-visualization span.address-visualization-part.subnetbits {
+  color: black;
   background-color: rgb(232, 242, 161);
 }

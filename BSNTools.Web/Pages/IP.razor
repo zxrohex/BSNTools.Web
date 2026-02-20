@@ -9,7 +9,7 @@
 <PageTitle>IP-Tools</PageTitle>
 
 @if (ipNetwork != null)
-{
+{ 
     <Window Title="IP-Tools">
         <MenuBar>
             <WindowMenuBar>
@@ -25,8 +25,8 @@
                 </MenuBarItem>
 
                 <MenuBarItem Title="Tools">
-                    <DropdownItem OnClick="OnTestClick">
-                        <span>Infos</span>
+                    <DropdownItem>
+                        <span>...</span>
                     </DropdownItem>
                 </MenuBarItem>
 
@@ -122,7 +122,22 @@
                                 @("Netzadresse")
                                 
                                 <span class="address-visualization">
-                                    <span class="address-visualization-part netbits">@ipNetwork.Network.ToBinaryString().Substring(0, ipNetwork.Cidr + 2)</span><span class="address-visualization-part hostbits">@ipNetwork.Network.ToBinaryString().Substring(ipNetwork.Cidr + 2)</span>
+                                    @if (!string.IsNullOrEmpty(CIDR))
+                                    {
+                                        <span class="address-visualization-part netbits">@ipNetwork.Network.ToBinaryString().Substring(0, ipNetwork.Cidr + 2)</span>
+
+                                        <span class="address-visualization-part subnetbits">@ipNetwork.Network.ToBinaryString().Substring(ipNetwork.Cidr + 2, int.Parse(CIDR) + 2 - (ipNetwork.Cidr + 2))</span>
+
+                                        <span class="address-visualization-part hostbits">@ipNetwork.Network.ToBinaryString().Substring((ipNetwork.Cidr + 2) + (int.Parse(CIDR) + 2 - (ipNetwork.Cidr + 2)))</span>
+
+
+                                    }
+                                    else
+                                    {
+                                        <span class="address-visualization-part netbits">@ipNetwork.Network.ToBinaryString().Substring(0, ipNetwork.Cidr + 2)</span>
+                                        
+                                        <span class="address-visualization-part hostbits">@ipNetwork.Network.ToBinaryString().Substring(ipNetwork.Cidr + 2)</span>
+                                    }
                                 </span>
                             </p>
 
@@ -132,12 +147,18 @@
                                     @if (!string.IsNullOrEmpty(CIDR))
                                     {
                                         
+                                        <span class="address-visualization-part netbits">@ipNetwork.Netmask.ToBinaryString().Substring(0, ipNetwork.Cidr + 2)</span>
 
+                                        <span class="address-visualization-part subnetbits">@ipNetwork.Netmask.ToBinaryString().Substring(ipNetwork.Cidr + 2, int.Parse(CIDR) + 2 - (ipNetwork.Cidr + 2))</span>
+
+                                        <span class="address-visualization-part hostbits">@ipNetwork.Netmask.ToBinaryString().Substring((ipNetwork.Cidr + 2) + (int.Parse(CIDR) + 2 - (ipNetwork.Cidr + 2)))</span>
 
                                     }
                                     else
                                     {
-                                        <span class="address-visualization-part netbits">@ipNetwork.Netmask.ToBinaryString().Substring(0, ipNetwork.Cidr + 2)</span><span class="address-visualization-part hostbits">@ipNetwork.Netmask.ToBinaryString().Substring(ipNetwork.Cidr + 2)</span>
+                                        <span class="address-visualization-part netbits">@ipNetwork.Netmask.ToBinaryString().Substring(0, ipNetwork.Cidr + 2)</span>
+                                    
+                                        <span class="address-visualization-part hostbits">@ipNetwork.Netmask.ToBinaryString().Substring(ipNetwork.Cidr + 2)</span>
                                     }
                                 </span>
                             </p>
@@ -213,6 +234,47 @@
                                     </span>
                                 </p>
 
+                                <p>Visuelle Darstellungen</p>
+
+                                <p class="indented-output">
+                                    <span>
+                                        @("Binärformat".PadRight(25, '.'))
+                                    </span>
+                                    <span>
+                                        @string.Join(".", subnet.First.GetAddressBytes().Select(i => Convert.ToString(i, 2).PadLeft(8, '0')))
+                                    </span>
+                                    <span>
+                                        @string.Join(".", subnet.Netmask.GetAddressBytes().Select(i => Convert.ToString(i, 2).PadLeft(8, '0')))
+                                    </span>
+                                    <span>
+                                        @string.Join(".", subnet.Network.GetAddressBytes().Select(i => Convert.ToString(i, 2).PadLeft(8, '0')))
+                                    </span>
+                                </p>
+
+                                <p>
+                                    Visuelle Darstellung der Bitbereiche (gruen = Netzbits, gelb = Subnetzbits, blau = Hostbits)
+                                </p>
+
+                                <p class="indented-output">
+                                    <p class="address-visualization-output">
+                                        @("Netzadresse")
+                                        <span class="address-visualization">
+                                            <span class="address-visualization-part netbits">@subnet.Network.ToBinaryString().Substring(0, ipNetwork.Cidr + 2)</span>
+                                            <span class="address-visualization-part subnetbits">@subnet.Network.ToBinaryString().Substring(ipNetwork.Cidr + 2, (subnet.Cidr - ipNetwork.Cidr))</span>
+                                            <span class="address-visualization-part hostbits">@subnet.Network.ToBinaryString().Substring(subnet.Cidr + 2)</span>
+                                        </span>
+                                    </p>
+
+                                    <p class="address-visualization-output">
+                                        @("Subnetzmaske")
+                                        <span class="address-visualization">
+                                            <span class="address-visualization-part netbits">@subnet.Netmask.ToBinaryString().Substring(0, ipNetwork.Cidr + 2)</span>
+                                            <span class="address-visualization-part subnetbits">@subnet.Netmask.ToBinaryString().Substring(ipNetwork.Cidr + 2, (subnet.Cidr - ipNetwork.Cidr))</span>
+                                            <span class="address-visualization-part hostbits">@subnet.Netmask.ToBinaryString().Substring(subnet.Cidr + 2)</span>
+                                        </span>
+                                    </p>
+                                </p>
+
                             }
 
                         </div>
@@ -245,22 +307,6 @@ else
 
     byte cidrParsed;
 
-    async Task OnTestClick()
-    {
-        string myValue = "";
-
-        var result = await CustomDialog.ShowAsync<string>("Test", (@<div>
-    <p>Erste Adresse: </p>
-    <p>@string.Join(".", ipNetwork.First.GetAddressBytes().Select(i => Convert.ToString(i, 2).PadLeft(8, '0')))</p>
-    <p>Subnetzmaske: </p>
-    <p>@string.Join(".", ipNetwork.Netmask.GetAddressBytes().Select(i => Convert.ToString(i, 2).PadLeft(8, '0')))</p>
-    <p>Netzadresse: </p>
-    <p>@string.Join(".", ipNetwork.Network.GetAddressBytes().Select(i => Convert.ToString(i, 2).PadLeft(8, '0')))</p>
-    <button @onclick="() => CustomDialog.Close(null)">OK</button>
-</div>
-    ), width: 500);
-    }
-
     private async Task OnCalculateClick()
     {
         string addr = await InputBox.ShowAsync("IP-Adresse eingeben", "Gebe die IP-Adresse ein:");
@@ -292,8 +338,5 @@ else
 
             });
         }
-
-        // Der Code "wartet" hier, bis der Nutzer geklickt hat
-
     }
 }
